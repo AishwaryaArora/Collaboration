@@ -4,9 +4,10 @@ package net.aish.dao;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.Query;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 //import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +28,7 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
-	/*@Override
+	@Override
 	public boolean isEmailValid(String email) {
 		Session session=sessionFactory.getCurrentSession();
 		Query query=session.createQuery("from User where email='"+email+"'");
@@ -46,6 +47,32 @@ public class UserDaoImpl implements UserDao {
 			return true;
 		else
 			return false;
-	}*/
+	}
+
+	@Override
+	public User login(User user) {
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from User where username=? and password=?");
+		query.setString(0,user.getUsername());
+		query.setString(1, user.getPassword());
+		User validUser=(User)query.uniqueResult();
+		return validUser;//either null or 1 user object
+	
+	}
+
+	@Override
+	public void updateUser(User user) {
+		Session session=sessionFactory.getCurrentSession();
+		session.update(user);//update User set online=true where username=?
+	
+		
+	}
+
+	@Override
+	public User getUserByUsername(String username) {
+		Session session=sessionFactory.getCurrentSession();
+		User user=(User)session.get(User.class, username);
+		return user;
+	}
 
 }

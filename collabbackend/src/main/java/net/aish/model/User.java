@@ -1,5 +1,7 @@
 package net.aish.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,8 +9,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="user_s180133")
-public class User {
+public class User implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	private String username;
 	private String password;
