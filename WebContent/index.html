@@ -33,11 +33,30 @@
         <span class="icon-bar"></span>
       </button>
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="">Connect!</a>
+                    <a class="navbar-brand" href="#/home">Connect!</a>
                 </div>
 <div class="collapse navbar-collapse" id="collapse-example">
                 <ul class="nav navbar-nav ">
+                <!-- ng-show="true" if currentUser.username is not undefined otherwise ng-show="false" -->
                 <li><a href="" ng-show="currentUser.username">Welcome {{currentUser.username}}</a></li>
+                <li><a href="#/editprofile" ng-show="currentUser.username">Edit User Profile</a></li>
+                
+                <li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" ng-show="currentUser.username">
+                Job <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                <li><a href="#/addjob" ng-show="currentUser.role=='ADMIN'">Add Job</a></li>
+                <li><a href="#/alljobs">Get All Jobs</a></li>
+                
+                </ul></li>
+                
+                <li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" ng-show="currentUser.username">
+                Blog <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+               <li><a href="#/addblog">Add Blog</a></li>
+                </ul></li>
+                
+                
+                
                 <li><a href="" ng-show="currentUser.username" ng-click="logout()">logout</a></li>
                 
 <li><a href="#/register" ng-hide="currentUser.username">Sign Up</a></li>
@@ -47,18 +66,20 @@
 </div>
 </div></nav>
 </header>
-<div ng-view>
-
-</div>
+<div ng-view></div>
 </body>
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
-	<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-animate.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="controllers/usercontroller.js"></script>
 <script type="text/javascript" src="services/userservice.js"></script>
+<script type="text/javascript" src="controllers/blogcontroller.js"></script>
+<script type="text/javascript" src="services/blogservice.js"></script>
+<script type="text/javascript" src="controllers/jobcontroller.js"></script>
+<script type="text/javascript" src="services/jobservice.js"></script>
+
 </html>
 

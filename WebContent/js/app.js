@@ -2,8 +2,12 @@
  * Angular Js Module
  */
 var app=angular.module("app",['ngRoute','ngCookies'])
+//1 st parameter is module name.
+//2nd param is array of dependent modules.[]-->no dependent modules.
+//['ngRoute']--> For Single Page Application.
+
 app.config(function($routeProvider){
-	$routeProvider
+	$routeProvider//for single page application
 	.when('/register',{
 		templateUrl:'views/registrationform.html',
 		controller:'UserController'
@@ -11,6 +15,26 @@ app.config(function($routeProvider){
 	.when('/login',{
 		templateUrl:'views/login.html',
 		controller:'UserController'
+	})
+	.when('/editprofile',{
+		templateUrl:'views/userprofile.html',
+		controller:'UserController'
+	})
+	.when('/addjob',{ //Data is from jobForm(view) to controller
+		templateUrl:'views/jobform.html',
+		controller:'JobController'
+	})
+	/*.when('/getJob/{jobId}',{ //controller to view
+		templateUrl:'views/jobprofile.html',
+		controller:'JobController'
+	})*/
+	.when('/alljobs',{  //from Controller to view
+		templateUrl:'views/joblist.html',
+		controller:'JobController'
+	})
+	.when('/addblog',{  //from Controller to view
+		templateUrl:'views/blogform.html',
+		controller:'BlogPostController'
 	})
 	.otherwise({templateUrl:'views/home.html'})
 })

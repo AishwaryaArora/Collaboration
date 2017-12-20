@@ -21,6 +21,15 @@ var userService={}
 	userService.logout=function(){
 		return $http.get(BASE_URL + "/logout")
 	}
+	
+	userService.getUser=function(){
+		return $http.get(BASE_URL + "/getuser")
+	}
+	
+	userService.editUserProfile=function(user){
+		return $http.put(BASE_URL + "/edituserprofile",user)
+	}
+	
 	return userService;
 })
 

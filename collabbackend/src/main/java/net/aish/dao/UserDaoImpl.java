@@ -49,6 +49,7 @@ public class UserDaoImpl implements UserDao {
 			return false;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public User login(User user) {
 		Session session=sessionFactory.getCurrentSession();
