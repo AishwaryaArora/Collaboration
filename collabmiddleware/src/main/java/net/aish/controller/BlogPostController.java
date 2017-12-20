@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import net.aish.dao.BlogPostDao;
 import net.aish.dao.UserDao;
@@ -58,5 +59,31 @@ public class BlogPostController {
 		return new ResponseEntity<BlogPost>(blogpost, HttpStatus.OK);
 
 	}
+	
+	//@RequestBody->TO CONVERT FROM json to java
+		@RequestMapping(value="/updateapprovalstatus",method=RequestMethod.PUT)
+		public ResponseEntity<?>updateApprovalStatus(@RequestBody BlogPost blogPost,@RequestParam(required=false) String rejectionReason,HttpSession session)
+		{
+			String username =(String) session.getAttribute("username");
+			if (username == null) {
+				
+				ErrorClazz error = new ErrorClazz(5, "UnAuthorized Access");
+				return new ResponseEntity<ErrorClazz>(error, HttpStatus.UNAUTHORIZED);  //401
+			}
+			//String username ="ser";
+			try
+			{
+				//if admin selects approve,blogPost.approved=1
+				//if admin selects reject,blogPost.approved=0
+				blogPostDao.updateBlogPost(blogPost,rejectionReason);
+			}
+			catch (Exception e) {
+				ErrorClazz error=new ErrorClazz(7,"Unable to update blogpost approval status"+ e.getMessage());
+				return new ResponseEntity<ErrorClazz>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+			return new ResponseEntity<Void>(HttpStatus.OK);			
+		}
+		
 
 }

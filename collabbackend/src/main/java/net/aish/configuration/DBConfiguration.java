@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import net.aish.model.BlogPost;
 import net.aish.model.Job;
+import net.aish.model.Notification;
 import net.aish.model.User;
 
 @Configuration
@@ -33,7 +34,7 @@ public class DBConfiguration {
 		//hibernateProperties.put("hibernate.format_sql", "true");	
 		//hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
 		lsf.addProperties(hibernateProperties);
-		Class classes[]=new Class[]{User.class,Job.class,BlogPost.class};
+		Class classes[]=new Class[]{User.class,Job.class,BlogPost.class,Notification.class};
 	    return lsf.addAnnotatedClasses(classes).buildSessionFactory();
 	}
 	@Bean
