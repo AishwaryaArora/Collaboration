@@ -1,6 +1,7 @@
 package net.aish.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,9 +62,57 @@ public class BlogPostController {
 
 	}
 	
+	
+	@RequestMapping(value="/getblogs/{approved}",method=RequestMethod.GET)
+	public ResponseEntity<?> getBlogs(HttpSession session,@PathVariable int approved)
+	{
+		String username = (String) session.getAttribute("username");
+		if (username == null)
+		{
+			ErrorClazz error = new ErrorClazz(5, "UnAuthorized Access");
+			return new ResponseEntity<ErrorClazz>(error, HttpStatus.UNAUTHORIZED);
+		}
+		//String username="ser";	
+		User user=userDao.getUserByUsername(username);
+		if(approved==0)    //list of blogs waiting for approval
+		{
+			if(!user.getRole().equals("ADMIN"))
+			{
+				ErrorClazz error=new ErrorClazz(7,"Access Denied");
+				return new ResponseEntity<ErrorClazz>(error,HttpStatus.UNAUTHORIZED);
+			}
+		
+		}
+		List<BlogPost> blogPosts=blogPostDao.getBlogs(approved);
+		
+		return new ResponseEntity<List<BlogPost>>(blogPosts,HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(value="/getblog/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> getBlogPost(@PathVariable int id, HttpSession session) 
+	{
+		
+		String username = (String) session.getAttribute("username");
+		if (username == null) {
+			
+			ErrorClazz error = new ErrorClazz(5, "UnAuthorized Access");
+			return new ResponseEntity<ErrorClazz>(error, HttpStatus.UNAUTHORIZED);
+		}
+		//String username="ser";
+		
+		BlogPost blogPost = blogPostDao.getBlogById(id);
+		return new ResponseEntity<BlogPost>(blogPost, HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
 	//@RequestBody->TO CONVERT FROM json to java
 		@RequestMapping(value="/updateapprovalstatus",method=RequestMethod.PUT)
-		public ResponseEntity<?>updateApprovalStatus(@RequestBody BlogPost blogPost,@RequestParam(required=false) String rejectionReason,HttpSession session)
+		public ResponseEntity<?>updateApprovalStatus(@RequestBody BlogPost blogPost,
+				@RequestParam(required=false) String rejectionReason,HttpSession session)
 		{
 			String username =(String) session.getAttribute("username");
 			if (username == null) {

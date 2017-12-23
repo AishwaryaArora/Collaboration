@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Blog List</title>
+<!--  <link rel="stylesheet" href="css/background.css">-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<br><br><br><br><br><br>
+	<div class="container">
+	<div class="row">
+			<div class="panel panel-default">
+	<div ng-show="currentUser.role=='ADMIN'">
+		<center><h3 ng-show="blogsWaitingForApproval.length>0" >List of Blogs waiting for approval</h3>
+		<br><br><div class="alert alert-info" ng-if="blogsWaitingForApproval.length==0">No blogposts waiting for approval.</div></center>
+	</div>
+	<div>
+		<table  align="center" ng-show="blogsWaitingForApproval.length>0" class="table table-hover" style="width:90%;">
+			<thead style="background-color:#009ACD;color:white;font-weight:bold;">
+				<tr>
+					<td><span>Blog Title</span></td>
+					<td>Author</td>
+					<td>Posted On</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="blogPost in blogsWaitingForApproval">
+					<td><a href="#/admin/getblog/{{blogPost.id}}">{{blogPost.blogTitle}}</a></td>
+					<td>{{blogPost.postedBy.firstname}} &nbsp;{{blogPost.postedBy.lastname}}</td>
+					<td>{{blogPost.postedOn | date:'medium'}}</td>
+			</tbody>
+		</table>
+	</div>
+<br>
+	<div>
+		<center><h3>List of  Approved Blogs </h3><br>
+		<div class="alert alert-info" ng-if="blogsApproved.length==0">No  approved blogposts available.</div></center>
+	</div>
+	<div>
+		<table  align="center" ng-show="blogsApproved.length>0"  class="table table-hover" style="width:90%;">
+			<thead style="background-color:#009ACD;color:white;font-weight:bold;">
+				<tr>
+					<td><span>Blog Title</span></td>
+					<td>Author</td>
+					<td>Posted On</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="blogPost in blogsApproved">
+					<td><a href="#/getblog/{{blogPost.id}}">{{blogPost.blogTitle}}</a></td>
+					<td>{{blogPost.postedBy.firstname}} &nbsp;{{blogPost.postedBy.lastname}}</td>
+					<td>{{blogPost.postedOn | date:'medium'}}</td>
+			</tbody>
+		</table>
+	</div>
+	</div>
+	</div>
+</div>
+</body>
+</html>

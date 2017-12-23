@@ -43,8 +43,8 @@ public class BlogPostDaoImpl implements BlogPostDao {
 	@Override
 	public BlogPost getBlogById(int id) {
 		Session session=sessionFactory.getCurrentSession();
-		BlogPost blog=(BlogPost)session.get(BlogPost.class,id);
-			return blog;
+		BlogPost blogPost=(BlogPost)session.get(BlogPost.class,id);
+			return blogPost;
 	}
 
 	@Override
