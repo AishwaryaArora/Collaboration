@@ -31,4 +31,16 @@ public class NotificationController {
 		List<Notification> notifications=notificationDao.getNotification(username, viewed);
 		return new ResponseEntity<List<Notification>>(notifications,HttpStatus.OK);
 	}
+	
+	/*public ResponseEntity<?> updateNotification(@PathVariable int notificationId,HttpSession session){
+		String username = (String)session.getAttribute("username");
+		if(username==null){//user id not logged in 
+			ErrorClazz error = new ErrorClazz(5, "UnAuthorized Access");
+			return new ResponseEntity<ErrorClazz>(error, HttpStatus.UNAUTHORIZED);
+		}
+	Notification notification = notificationDao.updateNotification(notificationId);
+	
+	}*/
+	
+	
 }

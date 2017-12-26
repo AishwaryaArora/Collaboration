@@ -32,4 +32,14 @@ public class NotificationDaoImpl implements NotificationDao {
 		return notifications;
 	}
 
+
+	@Override
+	public Notification updateNotification(int notificationId) {
+		Session session=sessionFactory.getCurrentSession();
+		Notification notification = (Notification)session.get(Notification.class, notificationId);
+		notification.setViewed(true);
+		session.update(notification);
+		return notification;
+	}
+
 }
