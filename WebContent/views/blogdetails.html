@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<title>Blog Details</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--  <link rel="stylesheet" href="css/background.css"> -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=initial">
+<style>
+.thumbnail {
+    padding:0px;
+}
+.panel {
+	position:relative;
+}
+.panel>.panel-heading:after,.panel>.panel-heading:before{
+	position:absolute;
+	top:11px;left:-16px;
+	right:100%;
+	width:0;
+	height:0;
+	display:block;
+	content:" ";
+	border-color:transparent;
+	border-style:solid solid outset;
+	pointer-events:none;
+}
+.panel>.panel-heading:after{
+	border-width:7px;
+	border-right-color:#f7f7f7;
+	margin-top:1px;
+	margin-left:2px;
+}
+.panel>.panel-heading:before{
+	border-right-color:#ddd;
+	border-width:8px;
+}
+body,h1,h2,h3,h4,h5 {font-family: "initial", sans-serif}
+</style>
+<body class="w3-light-grey">
+<br><br><br>
+<!-- w3-content defines a container for fixed size centered content, 
+and is wrapped around the whole page content, except for the footer in this example -->
+<div class="w3-content" style="max-width:1400px">
+
+<!-- Header -->
+<header class="w3-container w3-center w3-padding-32"> 
+  <h1><b style="color:white;padding-left:10px;">BLOGS &nbsp; SECTION</b></h1>
+ <center> <hr style="color:white;width:50px;font-size:40px;font-weight:bold;"></center>
+  <p style="color:white;">Feel free to like and comment on our  <span class="w3-tag">blog</span></p>
+</header>
+
+<!-- Grid -->
+<div class="w3-row">
+<div class="col-md-2"></div>
+<!-- Blog entries -->
+
+<div class="w3-col l8 s12" style="padding-left:3px;">
+  <!-- Blog entry -->
+  <div class="w3-card-4 w3-margin w3-white">
+ <br><center><h3><b style="color:#286090;">Blog Title:</b><b style="color:orange;"> {{blogPost.blogTitle}}</b></h3></center> 
+    <div class="w3-container">    
+      <h5>Post By : &nbsp;{{blogPost.postedBy.firstname}} &nbsp;{{blogPost.postedBy.lastname}}&nbsp;&nbsp;
+       <span class="w3-opacity">
+   <span style="padding-left:390px;">&nbsp;<span class="glyphicon glyphicon-time"></span>&nbsp;{{blogPost.postedOn | date:'medium'}}</span></span></h5><hr>
+    </div>
+
+    <div class="w3-container">
+      <p style="font-weight:normal;">{{blogPost.blogContent}}</p><hr>
+      <div class="w3-row">
+        <div class="w3-col m5 s12">
+        <!-- Change colour of glyphicon if user has liked the post -->
+       <p> <span ng-show="liked">
+        <button  ng-click="updateLikes()" class="w3-button w3-padding-medium w3-white w3-border w3-border-blue w3-round-medium"  style="border-color:blue;width:20%;height:5%;color:blue;">
+                <b  style="border-color:blue;color:blue;">Liked</b></button>
+                           &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up" style="font-size:18px;color:blue;"></span>&nbsp;{{blogPost.likes}}</span></p>
+       <p> <span ng-show="!liked">
+         <button class="w3-button w3-padding-medium w3-white w3-border w3-border-black w3-round-medium"
+         ng-click="updateLikes()" style="border-color:black;width:20%;height:5%;color:black;">
+          <b  style="border-color:black;color:black;">Like</b></button>
+                     &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up" style="font-size:18px;color:blue;"></span>&nbsp;{{blogPost.likes}}</span></p>
+         
+      
+          <!-- Change colour of glyphicon if user has liked the post -->
+          <!-- <span ng-show="liked">
+          <span class="glyphicon glyphicon-thumbs-up" style="font-size:20px;color:black"></span></span>
+          <span ng-show="!liked">
+          <span class="glyphicon glyphicon-thumbs-up" style="font-size:20px;color:blue"></span></span>
+          </span> -->
+          &nbsp;&nbsp;<!-- <b>Like</b></button> -->
+
+        </div>
+        
+        <div class="w3-col m7 w3-hide-small">
+        
+          <p>
+          <button class="w3-button w3-padding-medium w3-white w3-border w3-border-black w3-round-medium"
+               style="margin-left:375px;border-color:black;width:20%;height:5%;color:black;"  data-toggle="collapse" data-target="#comment"><b>Comment</b></button></p>&nbsp;&nbsp;
+         <a href=""  ng-click="showComments()"><span class="w3-padding-large w3-right"><b> View Comments  </b> <span class="w3-badge">{{blogPost.blogComments.length}}
+         </span></span></a>
+
+        </div>
+          <!-- Comments Form -->
+          <div  id="comment" class="collapse">
+          <div class="card my-4">
+            <h5 class="card-header">Leave a Comment:</h5>
+            <div class="card-body">
+              <form>
+                <div class="form-group">
+                  <textarea class="form-control" rows="3" ng-model="commentTxt"></textarea>
+                </div>
+                <!--insert into blogComment values (?,blogpostid,username,commenttxt,commentedon)  -->
+                <button type="submit" class="btn btn-primary" ng-click="addComment()" value="POST COMMENT">POST COMMENT</button>
+              </form>
+              <br>
+            </div>
+          </div>
+          </div>
+          
+<div class="container"  ng-show="showComment">
+<div class="w3-row">
+<h3 style="color:#286090;align:left;"> Blog Comments :</h3></div>
+<!-- <div class="row">
+<div class="col-sm-12">
+</div>/col-sm-12
+</div>/row -->
+<div class="w3-row"  ng-repeat="comment in blogPost.blogComments | orderBy:'-commentedOn'">
+
+<div class="col-sm-1">
+<div class="thumbnail">
+<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+</div><!-- /thumbnail -->
+</div><!-- /col-sm-1 -->
+<div class="col-sm-7">
+<div class="panel panel-default">
+<div class="panel-heading">
+<strong>{{comment.commentedBy.username}}</strong> <span class="text-muted" style="padding-left:400px;">{{comment.commentedOn | date: 'medium'}}</span>
+</div>
+<div class="panel-body" style="font-weight:normal;">
+{{comment.commentTxt}}
+</div><!-- /panel-body -->
+</div><!-- /panel panel-default -->
+</div><!-- /col-sm-5 -->
+
+<!-- <div class="col-sm-1">
+<div class="thumbnail">
+<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+</div>/thumbnail
+</div>/col-sm-1 -->
+<!-- 
+<div class="col-sm-5">
+<div class="panel panel-default">
+<div class="panel-heading">
+<strong>myusername</strong> <span class="text-muted">commented 5 days ago</span>
+</div>
+<div class="panel-body">
+Panel content
+</div>/panel-body
+</div>/panel panel-default
+</div>/col-sm-5 -->
+      </div>
+    </div>
+  
+<!-- END BLOG ENTRIES -->
+</div>
+</div>
+<!-- END GRID -->
+</div><br>
+
+<!-- END w3-content -->
+</div>
+
+</body>
+</html>

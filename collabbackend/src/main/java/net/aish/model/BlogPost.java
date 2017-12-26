@@ -2,14 +2,17 @@ package net.aish.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,7 +27,7 @@ public class BlogPost implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	@Column(unique=true)
+	@Column(unique=true,nullable=false)
 	private String blogTitle;
 	@Lob
 	private String blogContent;
@@ -33,6 +36,10 @@ public class BlogPost implements Serializable {
 	private User postedBy;
 	private boolean approved;
 	private int likes;
+	
+	@OneToMany(mappedBy="blogPost",fetch=FetchType.EAGER)
+	private List<BlogComment> blogComments;
+	
 	public int getId() {
 		return id;
 	}
@@ -71,6 +78,12 @@ public class BlogPost implements Serializable {
 	}
 	public int getLikes() {
 		return likes;
+	}
+	public List<BlogComment> getBlogComments() {
+		return blogComments;
+	}
+	public void setBlogComments(List<BlogComment> blogComments) {
+		this.blogComments = blogComments;
 	}
 	public void setLikes(int likes) {
 		this.likes = likes;

@@ -44,10 +44,10 @@ app.config(function($routeProvider){
 		templateUrl:'views/approvalform.html',
 		controller:'BlogPostDetailsController'			
 	})
-	/*.when('/getblog/:id',{
+	.when('/getblog/:id',{
 		templateUrl:'views/blogdetails.html',
 		controller:'BlogPostDetailsController'			
-	})*/
+	})
 	.otherwise({templateUrl:'views/home.html'})
 })
 app.run(function($rootScope,$cookieStore,UserService,$location){

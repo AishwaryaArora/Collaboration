@@ -31,7 +31,7 @@ blogService.updateBlogPost=function(blogPost,rejectionReason)
 		return $http.put(BASE_URL+"/updateapprovalstatus?rejectionReason=" + rejectionReason,blogPost)	
 }
 
-/*blogService.userLikes=function(id)
+blogService.userLikes=function(id)
 {
 	alert(id);
 	console.log(id);
@@ -45,7 +45,7 @@ blogService.updateLikes=function(blogPost){
 blogService.addComment=function(commentTxt,id)
 {
 	return $http.post(BASE_URL + "/addcomment?commentTxt="+commentTxt +'&id=' + id)
-}*/
+}
 	
 	
 	return blogService;

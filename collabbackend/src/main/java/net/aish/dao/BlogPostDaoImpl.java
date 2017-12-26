@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import net.aish.model.BlogComment;
 import net.aish.model.BlogPost;
 import net.aish.model.Notification;
 
@@ -22,14 +23,16 @@ public class BlogPostDaoImpl implements BlogPostDao {
 
 	@Override
 	public void saveBlogPost(BlogPost blog) {
-		try{Session session= sessionFactory.getCurrentSession();
+		Session session= sessionFactory.getCurrentSession();
+		session.save(blog);
+		/*try{Session session= sessionFactory.getCurrentSession();
 		session.save(blog);
 		}
 		catch (Exception e ){
 			//TODO Auto-generated catch block
 			e.printStackTrace();
 
-	}
+	}*/
 
 }
 
@@ -75,5 +78,12 @@ public class BlogPostDaoImpl implements BlogPostDao {
 			
 		}
 
+		
+	}
+
+	@Override
+	public void addComment(BlogComment blogComment) {
+		 Session session=sessionFactory.getCurrentSession();
+	     session.save(blogComment); //insert into blogComment.
 		
 	}}

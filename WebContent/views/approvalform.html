@@ -1,0 +1,31 @@
+<body>
+<br><br><br><br>
+	<h2>BlogPost Approval Form</h2>
+	<div class="row" style="padding-left:20px;">
+		<div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<b>Blog Title: {{blogPost.blogTitle}}</b> <br>
+					<b>Created By :</b> &nbsp;{{blogPost.postedBy.firstname}}<br>
+					<b>Created On :</b>&nbsp;{{blogPost.postedOn | date:'medium'}}<!-- /*another format is date:'yyyy:MM:dd */ -->
+				</div>
+				<div class="panel-body">{{blogPost.blogContent}}</div>
+			</div>
+		</div>
+	</div>
+	<form  style="padding-left:20px;">
+	<input type="radio" ng-model="blogPost.approved" value="true">&nbsp;Approve&nbsp;&nbsp;
+	<input type="radio" ng-model="blogPost.approved" value="false">&nbsp;Reject  <br><br>
+	<div class="reject" ng-show="blogPost.approved=='false'">
+	Enter Rejection Reason:
+	<input type="text" ng-model="rejectionReason" ><br>
+	<input type="submit" value="Submit" ng-click="updateBlogPost()" >
+	</div>
+	<div  ng-show="blogPost.approved=='true'">
+	<input type="submit" ng-click="updateBlogPost()" ><!-- update Query/delete query -->
+	</div>
+	</form>
+	
+	{{error.message}}
+	
+	</body>

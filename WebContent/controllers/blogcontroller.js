@@ -20,7 +20,7 @@ app.controller('BlogPostController',function(BlogService,$scope,$rootScope,$loca
 	
 	
 	/*//BlogPostLikes
-	BlogPostService.userLikes(id).then(function(response){
+	BlogService.userLikes(id).then(function(response){
 		if(response.data=='')  //user has not yet liked the post.
 			$scope.liked=false;
 		else
@@ -33,8 +33,8 @@ app.controller('BlogPostController',function(BlogService,$scope,$rootScope,$loca
 			$location.path('/login')
 		}
 		
-	})
-	*/
+	})*/
+	
 	
 	
 	// 2 variables blogsapproved, BlogsWitingForApproval

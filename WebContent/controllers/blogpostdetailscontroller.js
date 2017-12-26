@@ -34,7 +34,7 @@ app.controller('BlogPostDetailsController',function($scope,$routeParams,$locatio
 			})
 	
 	//BlogPostLikes -change colour of like button depending on whether user has liked the blog or not.
-	/*BlogPostService.userLikes(id).then(function(response){
+	BlogService.userLikes(id).then(function(response){
 		if(response.data=='')  //user has not yet liked the post.
 			$scope.liked=false;
 		else
@@ -50,7 +50,7 @@ app.controller('BlogPostDetailsController',function($scope,$routeParams,$locatio
 	})
 	
 	$scope.updateLikes=function(){
-		BlogPostService.updateLikes($scope.blogPost).then(function(response){
+		BlogService.updateLikes($scope.blogPost).then(function(response){
 			$scope.blogPost=response.data;
 			$scope.liked=!$scope.liked; //change like property evrytime user updates ie likes or dislikes.
 			//blogdetails.html
@@ -62,7 +62,7 @@ app.controller('BlogPostDetailsController',function($scope,$routeParams,$locatio
 				$location.path('/login')
 			}
 		})
-	}*/
+	}
 	
 	$scope.updateBlogPost=function(){
 		BlogService.updateBlogPost($scope.blogPost,$scope.rejectionReason).then(function(response){
