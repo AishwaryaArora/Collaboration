@@ -10,8 +10,10 @@ app.controller('HomeController',function($rootScope,$location,HomeService){
 			if(response.status==401)
 				$location.path('/login')
 		})
+		
 		HomeService.getNotificationViewed().then(function(response){
 			$rootScope.notificationViewed=response.data//select * from noti.. where username=? and viewed=1
+			$rootScope.notificationNotViewedLength=$rootScope.notificationViewed.length
 		},function(response){
 			if(response.status==401)
 				$location.path('/login')
