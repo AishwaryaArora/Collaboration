@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -117,4 +118,16 @@ public class UserController {
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
+	@RequestMapping(value="/getuser/{username}",method=RequestMethod.GET)
+	public ResponseEntity<?> getUser(@PathVariable String username ,HttpSession session)
+	{
+		String loginuser=(String)session.getAttribute("username");
+		if(loginuser ==null)
+		{
+			ErrorClazz error=new ErrorClazz(5,"Unauthorized access");
+			return new ResponseEntity<ErrorClazz>(error,HttpStatus.UNAUTHORIZED);
+		}
+		User user=userDao.getUserByUsername(username);
+		return new ResponseEntity<User>(user,HttpStatus.OK);
+	}
 }

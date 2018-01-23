@@ -4,10 +4,10 @@ import net.aish.model.User;
 
 public interface UserDao {
 	
-	void registerUser(User user);
-	boolean isEmailValid(String email);
-	boolean isUsernameValid(String username);
-	User login(User user);
-	void updateUser(User user);
-	User getUserByUsername(String username);
+	public void registerUser(User user);
+	public boolean isEmailValid(String email);
+	public boolean isUsernameValid(String username);
+	public User login(User user);
+	public void updateUser(User user);
+	public User getUserByUsername(String username);
 }

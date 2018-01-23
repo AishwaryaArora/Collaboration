@@ -1,8 +1,11 @@
 package net.aish.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @EnableWebMvc 
@@ -10,6 +13,12 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan(basePackages="net.aish")
 //<context:component-scan base-package="net.aish"></context:component-scan>
 
-public class WebConfig {
+public class WebConfig extends WebMvcConfigurerAdapter{
 
+	@Bean(name="multipartResolver")
+	public CommonsMultipartResolver getCommonsMultipartResolver()
+	{
+		CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver();
+		return multipartResolver;
+	}
 }
