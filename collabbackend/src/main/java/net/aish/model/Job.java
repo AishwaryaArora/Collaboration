@@ -2,12 +2,19 @@ package net.aish.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Job_Details")
@@ -19,6 +26,17 @@ public class Job implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
+	@ManyToOne
+	@JsonIgnore
+	private Job job;
+	
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@JsonIgnore
+	List<User> notifiedUsers;
+	
+	
+	
 	private String jobTitle;
 	private String jobDescription;
 	private String skillsrequired;
@@ -27,6 +45,14 @@ public class Job implements Serializable{
 	private String salary;
 	private String yrsofExp;
 	private Date postedOn;
+	private int applyJob;
+	
+	public int getApplyJob() {
+		return applyJob;
+	}
+	public void setApplyJob(int applyJob) {
+		this.applyJob = applyJob;
+	}
 	public int getId() {
 		return id;
 	}
@@ -81,5 +107,19 @@ public class Job implements Serializable{
 	public void setPostedOn(Date postedOn) {
 		this.postedOn = postedOn;
 	}
+	public Job getJob() {
+		return job;
+	}
+	public void setJob(Job job) {
+		this.job = job;
+	}
+	public List<User> getNotifiedUsers() {
+		return notifiedUsers;
+	}
+	public void setNotifiedUsers(List<User> notifiedUsers) {
+		this.notifiedUsers = notifiedUsers;
+	}
+	
+	
 	
 }

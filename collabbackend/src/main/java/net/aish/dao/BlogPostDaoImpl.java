@@ -12,7 +12,9 @@ import org.springframework.stereotype.Repository;
 
 import net.aish.model.BlogComment;
 import net.aish.model.BlogPost;
+import net.aish.model.CommentNotification;
 import net.aish.model.Notification;
+import net.aish.model.User;
 
 @Repository("blogPostDao")
 @Transactional
@@ -25,30 +27,36 @@ public class BlogPostDaoImpl implements BlogPostDao {
 	public void saveBlogPost(BlogPost blog) {
 		Session session= sessionFactory.getCurrentSession();
 		session.save(blog);
-		/*try{Session session= sessionFactory.getCurrentSession();
-		session.save(blog);
-		}
-		catch (Exception e ){
-			//TODO Auto-generated catch block
-			e.printStackTrace();
 
-	}*/
+	}
 
-}
 
 	@Override
 	public List<BlogPost> getBlogs(int approved) {
-		Session session=sessionFactory.getCurrentSession();
-		Query query=session.createQuery("from BlogPost where approved="+approved);	
-			return query.list();
+	Session session=sessionFactory.getCurrentSession();
+	Query query=session.createQuery("from BlogPost where approved="+approved);	
+		return query.list();
 	}
+
 
 	@Override
 	public BlogPost getBlogById(int id) {
-		Session session=sessionFactory.getCurrentSession();
-		BlogPost blogPost=(BlogPost)session.get(BlogPost.class,id);
-			return blogPost;
+	Session session=sessionFactory.getCurrentSession();
+	BlogPost blog=(BlogPost)session.get(BlogPost.class,id);
+		return blog;
 	}
+	
+	@Override
+	public List<BlogPost> getBlogByPostedBy(User postedBy,int approved) {
+		Session session=sessionFactory.getCurrentSession();
+	 Query query=session.createQuery("from BlogPost where postedBy=? and approved=?");
+	 System.out.println("BlogPost postedBy"+postedBy);
+	 System.out.println("Username"+approved);
+	 query.setEntity(0,postedBy);
+	 query.setInteger(1,approved);
+		return query.list();
+	}
+
 
 	@Override
 	public void updateBlogPost(BlogPost blogPost, String rejectionReason) {
@@ -78,12 +86,20 @@ public class BlogPostDaoImpl implements BlogPostDao {
 			
 		}
 
-		
 	}
+
 
 	@Override
 	public void addComment(BlogComment blogComment) {
-		 Session session=sessionFactory.getCurrentSession();
-	     session.save(blogComment); //insert into blogComment.
+     Session session=sessionFactory.getCurrentSession();
+     //insert into comment-notification
+     CommentNotification commentnotify=new CommentNotification();
+     commentnotify.setBlogTitle(blogComment.getBlogPost().getBlogTitle());
+     commentnotify.setCommentedBy(blogComment.getCommentedBy());
+     commentnotify.setUsername(blogComment.getBlogPost().getPostedBy().getUsername());
+     session.save(commentnotify);  
+     session.save(blogComment); //insert into blogComment.
 		
-	}}
+	}
+	
+}

@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="blogpost_s180133")
+@Table(name="BlogPost_Details")
 public class BlogPost implements Serializable {
 	
 	/**
@@ -27,14 +27,20 @@ public class BlogPost implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
 	@Column(unique=true,nullable=false)
 	private String blogTitle;
-	@Lob
+	
+	@Lob //character Large Object
 	private String blogContent;
+	
 	private Date postedOn;
+	
 	@ManyToOne
 	private User postedBy;
+	
 	private boolean approved;
+	
 	private int likes;
 	
 	@OneToMany(mappedBy="blogPost",fetch=FetchType.EAGER)

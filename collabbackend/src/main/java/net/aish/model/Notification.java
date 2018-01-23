@@ -17,7 +17,9 @@ public class Notification {
 	private String username;
 	private String approvalStatus;
 	private String rejectionReason;
-	private boolean viewed;
+	private boolean viewedblog;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -48,11 +50,11 @@ public class Notification {
 	public void setRejectionReason(String rejectionReason) {
 		this.rejectionReason = rejectionReason;
 	}
-	public boolean isViewed() {
-		return viewed;
+	public boolean isViewedblog() {
+		return viewedblog;
 	}
-	public void setViewed(boolean viewed) {
-		this.viewed = viewed;
+	public void setViewedblog(boolean viewedblog) {
+		this.viewedblog = viewedblog;
 	}
 	
 }

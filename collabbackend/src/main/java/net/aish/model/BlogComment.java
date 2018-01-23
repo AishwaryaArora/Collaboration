@@ -19,6 +19,7 @@ public class BlogComment {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
 	@ManyToOne
 	@JsonIgnore
 	private BlogPost blogPost;
