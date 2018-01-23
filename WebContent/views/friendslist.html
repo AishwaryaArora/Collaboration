@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Friends List</title>
+<link rel="stylesheet" href="css/background.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+body {
+	font-family: initial;
+}
+</style>
+</head>
+<br><br><br><br><br><br>
+	
+<body>
+<div ng-show="friends.length==0" style="align:center;background: url('images/transparent.jpg')  no-repeat 95% 50%;  background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -ms-background-size: cover;
+    -o-background-size: cover; 
+background-origin: content-box; background-position: 99% 50% ;padding-left:360px;padding-bottom:180px;  width:75%; height:500px;
+    background-color: transparent;">
+    <br><br>
+		<h3 align="center" style="color: #286090;">
+			<b> Sorry ,You have no Friends</b> <br><br>
+			<br> <img src="http://www.fillster.com/images/graphics/275w.gif"
+				border="0" alt="Cute Graphics for Myspace" align="middle">
+		</h3>
+	</div>
+	
+	<div class="container" ng-show="friends.length>0"  style="z-index:2;position: relative; overflow:hidden;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 align=center
+						style="font-size: 20px; color: #ff6005; font-weight: bold;">
+						<span class="pull pull-left"><img src="images/friendicon.jpg" width="70"></span>
+						 &nbsp; Friends List</h3>
+
+				</div>
+				<div class="panel-body">
+					<table ng-show="friends.length>0" class="table"
+						style="align: center; margin-left: 100px;; margin-right: 100px; width: 80%;">
+						<!-- <caption style="font-size:20px;padding-left:400px;"><h3  style="color:#286090;"><b> Your Friends List</b></h3></caption> -->
+						<thead>
+							<tr>
+								<th>Profile Picture</th>
+								<th>Name</th>							
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="user in friends">
+								<!-- Friends is List<User>,user is user object -->
+								<td><img class="img-circle"
+									src="http://localhost:9090/collabmiddleware/getimage/{{user.username}}"
+									alt="" onerror="this.src='images/profilepic2.png'" width="80"
+									height="80" style="color: white;"></td>
+								<td class="text-capitalize"> <a href="#/getUser/{{user.username}}"
+									style="color: black; font-size: 18px;">
+									{{user.firstname}} &nbsp;&nbsp; {{user.lastname}} </a></td>
+								
+								<td style="align: center;"><a href="" disabled="disabled"
+									class="btn btn-warning"
+									style="align: center; margin-top: 25px;"> Friends &nbsp; <span
+										class="glyphicon glyphicon-ok"></span></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

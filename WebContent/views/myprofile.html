@@ -2,53 +2,146 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>User Profile</title>
-<!-- CORE CSS--> 
+<title>User Form</title>
+ <!-- CORE CSS--> 
  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="css/register.css">
- <link rel="stylesheet" href="css/userprofile.css">
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-<script src="js/userprofile.js"></script>
-<style>
-.dropdown {
-    position: relative;
-    display: inline-block;
-    text-decoration:none;
-    background-color:white;
-    color:black;
+ <link rel="stylesheet" href="css/register.css">
+ <style>
+ 
+.profile-pic {
+	position: relative;
+	display: inline-block;
 }
-.dropdown-content {
-    display: none;
+.profile-pic:hover .edit {
+	display: block;
+}
+#glyph:hover {
+    text-decoration: underline;
+}
+.edit:hover{
+  text-decoration: underline;
+}
+.edit {
+	padding-top:18px;	
+	padding-right:20px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: none;
+}
+.edit a {
+	color: #fff;
+}
+ #myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#glyph:hover{opacity: 0.7;}
+#myImg:hover {opacity: 0.7;}
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position:fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 40px; /* Location of the box */
+    left:20px;
+    top: 100px;
+    width: 95%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto;  /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+/* Caption of Modal Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: white;
+    padding: 10px 0;
+    height: 150px;
+}
+/* Add Animation */
+.modal-content, #caption {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+/* The Close Button */
+.close {
     position: absolute;
-    background-color:black;
-    color:white;
-   min-width:190px;
-   /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+    top: 15px;
+    right: 35px;
+    color: blue;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
 }
-.dropdown-content table tr td {
-    color:white;
-    padding: 12px 16px;
+.close:hover,
+.close:focus {
+    color: #f1f1f1;
     text-decoration: none;
-    display: block;
+    cursor: pointer;
 }
-.dropdown-content table tr td:hover {background-color: #f1f1f1;color:black;}
-.dropdown:hover .dropdown-content {
-    display: block;
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
 }
-.dropdown:hover b {
-    color:blue;
+ </style>
+ 
+ <script>
+// Get the modal
+var modal = document.getElementById('myModal');
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementById('glyph');
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = myImg.src;
+   
 }
-</style>
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+    modal.style.display = "none";
+}
+</script>
+ 
 </head>
-<body  bgcolor="blue" style="padding-top:30px;">
+<body bgcolor="blue" style="padding-top:30px;">
+
 <br><br><br>
 <!-- Header -->
 <header class="w3-container w3-center w3-padding-32"> 
-  <h2><b style="color:white;padding-left:10px;">User &nbsp; Profile</b></h2>
+  <h2><b style="color:white;padding-left:10px;">My &nbsp; Profile</b></h2>
 </header>
   <div id="login-page"  style="padding-top:0px;" class="row">
    <center>
@@ -64,7 +157,7 @@
 
          <p class="center login-form-text"  style="color:#ff6005;font-size:20px">PROFILE DETAILS</p><br>
           	<div class="profile-pic">
-         <img  class="img-circle" id="myImg"  src="http://localhost:9090/collabmiddleware/getimage/{{userdetails.username}}"  alt="" onerror="this.src='images/profilepic2.png'" width="150" height="140" style="color:white;">
+         <img  class="img-circle" id="myImg"  src="http://localhost:9090/collabmiddleware/getimage/{{currentUser.username}}"  alt="" onerror="this.src='images/profilepic2.png'" width="150" height="140" style="color:white;">
           <div class="edit"  id="glyph"><span class="glyphicon glyphicon-zoom-in" style="width:18px;color:white;"></span><span style="color:white;">Zoom-in</span></div>
 
      <br><br>
@@ -75,35 +168,12 @@
         </div>
         <div class="panel-body">
         <div class="form-group">
-        <div class="col-md-8" >
-   <div ng-controller="FriendController"> <span ng-show="pendingrequest.status=='A'">  <a    disabled="disabled"  class="btn btn-primary" style="align:center;margin-top:25px;"> Friends &nbsp; <span class="glyphicon glyphicon-ok"></span></a>
-     </span> 
-      </div> 
-      </div>
-       <!--  <div class="col-md-2">
-                     
-          </div> -->
-          <div class="col-md-4" style="float:right;">
-          <span style="color:orange;font-size:18px;">  Mutual Friends:  </span> 
-          <div class="dropdown"> <b> {{mutualfriends.length}}</b>
-           <div class="dropdown-content">
-           <table>
-           <tr ng-repeat="mutualfriend in mutualfriends" >
-           <td> <a href="#/getUser/{{mutualfriend.username}}"><img  class="img-rounded"  src="http://localhost:9090/collabmiddleware/getimage/{{mutualfriend.username}}"  alt="" onerror="this.src='images/profilepic2.png'" width="35" height="35" style="color:white;">
-           &nbsp; {{mutualfriend.firstname}} {{mutualfriend.lastname}}</a></td>
-           </tr>
-           </table>
-           </div>
-          </div>
-          </div>
-          </div>
-          <div class="form-group">
           <div class="col-md-5">
             <i class="mdi-social-person-outline prefix"></i>
              <label for="firstname" class="center-align" style="color:#ff6005;padding-left:130px;" >First Name :</label>
             </div>
             <div class="col-md-3">
-             {{userdetails.firstname}}
+             {{user.firstname}}
            
           </div>
         </div>
@@ -112,7 +182,7 @@
             <i class="mdi-social-person-outline prefix"></i>
               <label for="lastname" class="center-align"  style="color:#ff6005;padding-left:130px;">Last Name :</label></div>
               <div class="col-md-3">
-               {{userdetails.lastname}}
+               {{user.lastname}}
            
           
           </div>
@@ -122,7 +192,7 @@
 			<span class="glyphicon glyphicon-user" style="color:#ff6005;font-size:30px;padding-left:130px;"></span>
 			</div>
 			  <div class="col-md-3"> 
-			   {{userdetails.username}}
+			   {{user.username}}
             
            
             <span style="color:red" ng-if="error.code==2">{{error.message}}</span>
@@ -135,7 +205,7 @@
             <span class="glyphicon glyphicon-envelope" style="color:#ff6005;font-size:30px;padding-left:175px;"></span>
             	</div>
               <div class="col-md-4"  style="padding-left:100px;">
-               {{userdetails.email}}          
+               {{user.email}}          
             <span style="color:red" ng-if="error.code==3">{{error.message}}</span>
           </div>
         </div>
@@ -144,7 +214,7 @@
            <span class="glyphicon glyphicon-earphone" style="color:#ff6005;font-size:30px;padding-left:130px;"></span>
           </div>
        <div class="col-md-3">
-       <div  class="form-control-static" style="padding-left:20px;"> {{userdetails.phonenumber}} </div>          
+       <div  class="form-control-static" style="padding-left:20px;"> {{user.phonenumber}} </div>          
           </div>
         </div>
         
@@ -153,7 +223,7 @@
             <div class="col-md-5">        
            <label for="role"  style="color:#ff6005;padding-left:130px;"> Role :</label></div>
             <div class="col-md-3"> 
-        {{userdetails.role}} 
+        {{user.role}} 
         <br> 
         </div>       
         </div>
@@ -174,6 +244,7 @@
         </div>
     </div>
 
+
 </center>
  
      <!-- The Modal -->
@@ -183,5 +254,5 @@
   <img class="modal-content" id="img01">
   <div id="caption"></div>
 </div>
-</body>
+ </body>   
 </html>

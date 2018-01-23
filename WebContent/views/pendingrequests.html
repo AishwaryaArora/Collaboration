@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Pending Requests</title>
+<link rel="stylesheet" href="css/background.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+body {
+	font-family: initial;
+}
+</style>
+</head>
+<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div ng-show="pendingRequests.length==0" style="align:center;background: url('images/transparent.jpg')  no-repeat 95% 50%;  background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -ms-background-size: cover;
+    -o-background-size: cover; 
+background-origin: content-box; background-position: 99% 50% ;padding-left:360px;padding-bottom:180px;  width:75%; height:500px;
+    background-color: transparent;">
+		<h3 align="center" style="color: #ff6005;">
+			<br><br><b>No Pending Requests</b> <br>
+			<br>
+			<!-- <center><img src="http://www.fillster.com/images/graphics/281o.gif" border="0" alt="Clipart Graphics for Myspace"><br /></center> -->
+		
+	<br>	<img src="http://www.fillster.com/images/graphics/275w.gif" border="0"
+			alt="Cute Graphics for Myspace" align="middle"><br />
+		</h3>
+		
+	</div>
+<body>
+	
+
+	<div class="container" ng-show="pendingRequests.length>0"  style="z-index:2;position: relative; overflow:hidden;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 align="center" style="color: #ff6005;">
+						<!-- <img src="images/friendrequestblue.jpg" width="70">
+						&nbsp;&nbsp; --> <b>Friend Requests</b>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table"
+						style="align: center; margin-left: 100px;; margin-right: 100px; width: 80%;"
+						ng-show="pendingRequests.length>0">
+						<thead>
+							<tr>
+								<th>Profile Picture</th>
+								<th>Full Name</th>
+								<th>Accept</th>
+								<th>Reject</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- Pending request is object of type friend -->
+							<!--pendingRequests is List of Friends  -->
+							<tr ng-repeat="pendingrequest in pendingRequests">
+								<td><img class="img-circle"
+									src="http://localhost:9090/collabmiddleware/getimage/{{pendingrequest.fromId}}"
+									alt="" onerror="this.src='images/profilepic2.png'" width="44"
+									height="42" style="color: white;"></td>
+								<td><a
+									style="font-size: 18px; font-family: Georgia, serif; font-weight: bold; color: #800000;"
+									href="#/getUser/{{pendingrequest.fromId}}"
+									class="text-capitalize">{{pendingrequest.fromUser.firstname}}
+										&nbsp; {{pendingrequest.fromUser.lastname}}</a></td>
+								<td><a class="btn btn-success"
+									ng-click="updatePendingRequest(pendingrequest,'A')"><span
+										class="glyphicon glyphicon-ok"></span>&nbsp; <!-- update friend set status 'A'  where id=?-->
+										<span style="color: white;">Accept</a></span></td>
+								<td><a class="btn btn-danger"
+									ng-click="updatePendingRequest(pendingrequest,'R')"><span
+										class="glyphicon glyphicon-remove"></span>&nbsp; <!-- Delete friend set status 'R' where id=? -->
+										<span style="color: white;"> Reject</a></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

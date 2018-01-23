@@ -1,31 +1,114 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/background.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<style>
+html,body,h1,h2,h3,h4 {font-family: "initial", sans-serif}
+input[type=radio] {
+	display: none;
+}
+input[type=radio]+label {
+	width: 170px;
+	display: inline-block;
+	margin: -2px;
+	padding: 4px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	line-height: 20px;
+	color: #333;
+	text-align: center;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+	vertical-align: middle;
+	cursor: pointer;
+	background-color: #f5f5f5;
+	background-image: -moz-linear-gradient(top, #fff, #e6e6e6);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff),
+		to(#e6e6e6));
+	background-image: -webkit-linear-gradient(top, #fff, #e6e6e6);
+	background-image: -o-linear-gradient(top, #fff, #e6e6e6);
+	background-image: linear-gradient(to bottom, #fff, #e6e6e6);
+	background-repeat: repeat-x;
+	border: 1px solid #ccc;
+	border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	border-bottom-color: #b3b3b3;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',
+		endColorstr='#ffe6e6e6', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.05);
+}
+input[type=radio]:checked+label {
+	background-image: none;
+	outline: 0;
+	-webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px
+		rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px
+		rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px
+		rgba(0, 0, 0, 0.05);
+	background-color: #e0e0e0;
+}
+</style>
+
 <body>
-<br><br><br><br>
-	<h2>BlogPost Approval Form</h2>
+<br><br><br><br><br>
+<div class="w3-content" style="max-width:1400px">
+<div class="w3-row">
+<div class="col-md-2"></div>
+<!-- Blog entries -->
+
+<div class="w3-col l9 s12" style="align:center;padding-right:100px;">
+  <!-- Blog entry -->
+  <div class="w3-card-4 w3-margin w3-white" style="z-index:2;position: relative; overflow:hidden;">
+
+	<br><center><h2><b style="color:#ff6005">BlogPost Approval Form</b></center></h2><br>
+	<center><h3><b style="color:#ff6005;">Blog Title:</b><b style="color:orange;"> {{blogPost.blogTitle}}</b></h3></center>
+	<br> 
+	<div class="w3-container">  
 	<div class="row" style="padding-left:20px;">
 		<div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<b>Blog Title: {{blogPost.blogTitle}}</b> <br>
-					<b>Created By :</b> &nbsp;{{blogPost.postedBy.firstname}}<br>
-					<b>Created On :</b>&nbsp;{{blogPost.postedOn | date:'medium'}}<!-- /*another format is date:'yyyy:MM:dd */ -->
-				</div>
-				<div class="panel-body">{{blogPost.blogContent}}</div>
-			</div>
-		</div>
+			
+			<h5>	<b>Created By :</b><span style="font-weight:normal;">{{blogPost.postedBy.firstname}}</span>	
+				<span style="align:right;padding-left:430px;"><b>Created On :</b>&nbsp;{{blogPost.postedOn | date:'medium'}} </span>
+				</h5><!-- /*another format is date:'yyyy:MM:dd */ -->
+				</div><hr>
+				  <div class="w3-container">
+      <p style="font-weight:normal;">{{blogPost.blogContent}}</p>
+			
+		
+	
+	</div><hr>
 	</div>
 	<form  style="padding-left:20px;">
-	<input type="radio" ng-model="blogPost.approved" value="true">&nbsp;Approve&nbsp;&nbsp;
-	<input type="radio" ng-model="blogPost.approved" value="false">&nbsp;Reject  <br><br>
+<center> <div class="form-check form-check-inline">
+	<input type="radio" class="form-check-input" ng-model="blogPost.approved" value="true" id ="approved">&nbsp;
+	<label class="form-check-label" style="color:green;" for="approved"><span class="glyphicon glyphicon-ok"></span>&nbsp;Approve</label>&nbsp;&nbsp;
+	<input type="radio"  ng-model="blogPost.approved" value="false" id="reject">&nbsp;
+	<label class="form-check-label" style="color:red;" for="reject"><span class="glyphicon glyphicon-remove"></span>&nbsp;Reject</label>  <br><br>
+		</div>
 	<div class="reject" ng-show="blogPost.approved=='false'">
-	Enter Rejection Reason:
-	<input type="text" ng-model="rejectionReason" ><br>
-	<input type="submit" value="Submit" ng-click="updateBlogPost()" >
+    <div class="form-group">
+   <span style="align:left"> Enter Rejection Reason:</span>
+	<textarea  placeholder="Rejection Reason" cols="8" ng-model="rejectionReason" class="form-control" > </textarea><br>
+	</div>
+	<input type="submit" class="btn btn-warning"  value="Submit" ng-click="updateBlogPost()" > <br> <br>
 	</div>
 	<div  ng-show="blogPost.approved=='true'">
-	<input type="submit" ng-click="updateBlogPost()" ><!-- update Query/delete query -->
+	<br>
+	<input type="submit" ng-click="updateBlogPost()" class="btn btn-warning" >  <br> <br><!-- update Query/delete query -->
 	</div>
+</center>
 	</form>
-	
+	</div>
 	{{error.message}}
-	
+	</div>
+	</div>
+	</div>
+	</div>
 	</body>

@@ -1,14 +1,299 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
+<title>Home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel='stylesheet'
+	href='https://fonts.googleapis.com/css?family=initial'>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+hr.style-one {
+	border: 0;
+	height: 1px;
+	background: #333;
+	background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+/*to show only 2 entries for suggested users  */
+#table {
+	border-collapse: collapse;
+}
+#table tr:nth-child(n + 3) {
+	visibility: hidden;
+	height: 0px;
+	display: none;
+}
+/*End of entries  */
+.w3-bar-item w3-button w3-padding {
+	background-color: blue;
+}
+w3-bar-block a:hover {
+	color: orange;
+}
+.w3-row .w3-col m3 .w3-bar-block a:hover {
+	color: green;
+	background-color: orange;
+}
+a:hover {
+	color: #67C8FF;
+	/* background-color:orange; */
+}
+html, body, h1, h2, h3, h4, h5 {
+	font-family: "initial", sans-serif
+}
+</style>
+<body class="w3-theme-l5">
+	<!-- Page Container -->
+	<div class="w3-container w3-content"
+		style="max-width: 1400px; margin-top: 80px">
+		<!-- The Grid -->
+		<div class="w3-row">
+			
+			<br>
+			<!--  Start Left Column -->
+			<div class="w3-col m3">
+				<!-- Sidebar/menu -->
+				<nav class="w3-sidebar w3-collapse w3-white w3-animate-left"
+					style="z-index: 3;width:300px;height:450px;" id="mySidebar">
+					<br>
+					<div class="w3-container" style="background-color: #fcfcfc;">
+						<!-- or #2ed2da -->
+						<a href="#" onclick="w3_close()"
+							class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey"
+							title="close menu"> <i class="fa fa-remove"></i>
+						</a>
+						<center>
+							<h4 align="center" style="color: #ff6005">
+								<marquee onmouseover="this.stop()"
+									onmouseout="this.start()" direction="right"><b> Welcome
+									{{currentUser.username}}</b></marquee>
+							</h4>
+							<p class="w3-center">
+								<img class="img-rounded"
+									src="http://localhost:9090/collabmiddleware/getimage/{{currentUser.username}}"  
+									alt="" onerror="this.src='images/profilepic2.png'" width="170"
+									height="170" style="color: white;">
+							</p>
+
+							<span
+								style="color: black; font-size: 17px;">
+								<b>{{currentUser.firstname | uppercase}} {{currentUser.lastname |
+								uppercase}}</b></span> <br><br>
+					</div>
+					<br>
+					<div class="w3-bar-block"
+						style="align: center; background-color: #fcfcfc; color: white;">
+						<a href="#/myprofile" style="color: black; text-decoration: none;"
+							onclick="w3_close()"
+							class="w3-bar-item w3-button  w3-hover-none w3-padding w3-text-black w3-hover-text-black  w3-hover-deep-orange">
+							<i class="fa fa-th-large fa-fw w3-margin-right"></i>PORTFOLIO
+						</a> <a href="#/friends" style="text-decoration: none;"
+							onclick="w3_close()"
+							class="w3-bar-item w3-button  w3-hover-none w3-padding w3-text-black w3-hover-text-black  w3-hover-deep-orange"><i
+							class="fa fa-users fa-fw w3-margin-right"></i>FRIENDS</a>
+							 <a href="#/myblogs" style="text-decoration: none;"
+							onclick="w3_close()"
+							class="w3-bar-item w3-button w3-hover-none w3-padding w3-text-black w3-hover-text-black  w3-hover-deep-orange"><i
+							class="fa fa-envelope fa-fw w3-margin-right"></i>BLOGS</a>
+					</div>
+				</nav>
+
+				<br>
+				</center>
+
+			
+			</div>
+				<!-- End of  Left Column -->
+
+			<!-- Start  Middle Column -->
+			<div class="w3-col m6" ng-show="currentUser.username"
+				class="w3-container w3-content" style="backgroung-color: grey; z-index: 2;position: relative; overflow: hidden;">
+				<h4>
+					<small>RECENT POSTS</small>
+				</h4>
+				<div ng-if="blogsApproved.length==0">No blogposts available.</div>
+
+				<div class="w3-col m11">
+
+					<div class="blogs" ng-show="blogsApproved.length>0"
+						ng-repeat="blogPost in blogsApproved">
+						<hr style="offset: 5px;">
+						<div class="w3-container w3-card w3-white w3-round w3-margin">
+							<br> <img
+								src="http://localhost:9090/collabmiddleware/getimage/{{blogPost.postedBy.username}}" 
+								alt="" onerror="this.src='images/profilepic2.png'"
+								class="w3-left w3-circle w3-margin-right"
+								style="width: 50px; height: 50px;"> <span
+								class="w3-right w3-opacity"><span
+								class="glyphicon glyphicon-time"></span>
+								&nbsp;{{blogPost.postedOn | date:'medium'}}</span>
+							<h4>{{blogPost.postedBy.firstname}}
+								&nbsp;{{blogPost.postedBy.lastname}}</h4>
+							<br>
+							<hr class="w3-clear">
+							<h4 style="color: #ed4609;">
+								<strong><a href="#/getblog/{{blogPost.id}}">{{blogPost.blogTitle}}</a></strong>
+							</h4>
+							<p>{{blogPost.blogContent}}</p>
+							<p>
+								<span class="glyphicon glyphicon-thumbs-up"
+									style="font-size: 20px; color: #16187c; padding-top: 5px;"></span>&nbsp;{{blogPost.likes}}
+								&nbsp;&nbsp; <span class="glyphicon glyphicon-comment"
+									style="color: #16187c;"></span>&nbsp;{{blogPost.blogComments.length}}
+							</p>
+						</div>
+					</div>
+					<br><br><br>
+
+					
+				</div>
+			</div>
+		
+           <!-- End  of Middle Column -->
+           
+			<!--  Start Right Column -->
+
+			<div class="w3-col m3" >
+				<br>
+				<br>
+				<!--Suggested users card  -->
+				<div class="w3-card w3-round w3-white w3-center"  style="z-index: 2;position: relative; overflow: hidden;">
+					<div class="w3-container">
+
+						<h4 align="center" style="color: #ed4609;">Suggested Users:</h4>
+						<div ng-show="suggestedusers.length==0">
+							<br>
+							<h4 align="center" style="color: black;">
+								<b>No Suggestions Available.</b>
+							</h4>
+						</div>
+						<table class="table" style="float: right; max-height: 200px;"
+							id="table">
+							<tbody>
+								<tr ng-repeat="user in suggestedusers | filter:Search">
+									<!-- suggestedusers is List<User>,user is user object -->
+									<td><img class="img-circle"
+										src="http://localhost:9090/collabmiddleware/getimage/{{user.username}}" 
+										alt="" onerror="this.src='images/profilepic2.png'" width="60"
+										height="60" style="color: white;"> </td>
+									<td
+										style="align: center; padding-top: 30px; padding-left: 0px;">
+										<a href="#/getUser/{{user.username}}"
+										style="color: black; font-weight: bold;">{{user.firstname}}&nbsp;
+											{{user.lastname}}</a> <br>
+									</td>
+									<td style="align: center;"><a href=""
+										ng-click="addFriendRequest(user.username)"
+										class="btn btn-primary"
+										style="align: center; margin-top: 25px;">Add Friend </a></td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+						<br> <a class="pull pull-right" href="#/suggestedusers" ng-show="suggestedusers.length>0"
+							style="color: black;">See All</a> <br>
+						<br>
+
+					</div>
+					<br>
+				</div>
+				<!--End Suggested Users card  -->
+				<br>
+				<br>
+				<!--Friend Request Card  -->
+				<div class="w3-card w3-round w3-white w3-center" >
+				<!-- Friend request container -->
+					<div class="w3-container">
+						<h4 align="center" style="color: #ed4609;">
+							<img src="images/friendrequest.jpg" width="70"> &nbsp;
+							Friend Requests: &nbsp;&nbsp;
+						</h4>
+						<hr
+							style="border: 0; font-weight: bold; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+						<!--  <hr size="50" style="color:grey;border:0;height:1px;background: #f1f1f1;background-image: linear-gradient(to right, #ccc, #333, #ccc);"> -->
+						<div ng-show="pendingRequests.length==0">
+							<h4 align="center" style="color: black;">
+								<b>No Pending Requests</b>
+							</h4>
+						</div>
+						<!--friend requests list ng-repeat  -->
+						<div class="w3-container" ng-show="pendingRequests.length>0"
+							ng-repeat="pendingrequest in pendingRequests" id="table" >
+							<div class="w3-row">
+							<div class="w3-col m12" class="text-capitalize">
+								<!-- <div class="w3-col m2"
+									> -->
+									<img align="left" class="img-circle"
+										src="http://localhost:9090/collabmiddleware/getimage/{{pendingrequest.fromId}}" 
+										alt="" onerror="this.src='images/profilepic2.png'" width="60"
+										height="60" style="color: white;">
+								
+								
+									<a href="#/getUser/{{pendingrequest.fromId}}"
+										class="text-capitalize"
+										style="padding-left:25px;padding-top:12px;float:left;align:left; color: black; font-size: 20px;">
+										{{pendingrequest.fromUser.firstname}}&nbsp;
+										{{pendingrequest.fromUser.lastname}} </a>
+								</div>
+							</div>
+							<br>
+							<!-- Accept reject friend request row -->
+							<div class="w3-row">
+								<div class="w3-half">
+									<button class="w3-button w3-block w3-green w3-section"
+										ng-click="updatePendingRequest(pendingrequest,'A')"
+										title="Accept">
+										<i class="fa fa-check"></i> &nbsp;Accept
+									</button>
+								</div>
+								<div class="w3-half">
+									<button class="w3-button w3-block w3-red w3-section"
+										ng-click="updatePendingRequest(pendingrequest,'R')"
+										title="Reject">
+										<i class="fa fa-remove"></i>&nbsp;&nbsp;Reject
+									</button>
+								</div>
+
+							</div>
+							<!-- End of accept reject row -->
+							<hr  style="color:grey;border:0;height:1px;background: #f1f1f1;background-image: linear-gradient(to right, #ccc, #333, #ccc);">
+							
+						</div>
+						
+						<!--End of friend request list  -->
+                     
+					 <a class="pull pull-right" href="#/pendingrequests" ng-show="pendingRequests.length>0"
+							style="color: #2E86C1;">See All</a> <br>
+						<br>
+					</div>
+					<!-- End of Friend request container  -->
+				</div>
+				<!--End of  Friend Request Card  -->
+				
+				
+			</div>
+			<!-- End of Right Column -->
+		</div>
+		<!-- End of  Grid -->
+	</div>
+	<!-- End  of Page Container -->
+
+	<br>
 
 
-   
-<body>
-<b> Home Page </b>
-
+	<script>
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
 </body>
 </html>

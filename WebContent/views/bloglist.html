@@ -3,7 +3,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Blog List</title>
-<!--  <link rel="stylesheet" href="css/background.css">-->
+<link rel="stylesheet" href="css/background.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -11,16 +11,35 @@
 </head>
 <body>
 <br><br><br><br><br><br>
-	<div class="container">
+	<div class="container" style="padding-left:75px;z-index:2;position: relative; overflow:hidden;">
 	<div class="row">
-			<div class="panel panel-default">
-	<div ng-show="currentUser.role=='ADMIN'">
-		<center><h3 ng-show="blogsWaitingForApproval.length>0" >List of Blogs waiting for approval</h3>
-		<br><br><div class="alert alert-info" ng-if="blogsWaitingForApproval.length==0">No blogposts waiting for approval.</div></center>
+			<div class="panel panel-default" style="height:130%;">
+	<div ng-show="currentUser.role=='ADMIN'"><br><br>
+		<center><h3  style="color:red;" ng-show="blogsWaitingForApproval.length>0" >List of Blogs Waiting for Approval</h3>
+		<br><div class="alert alert-info" ng-if="blogsWaitingForApproval.length==0">No blogposts waiting for approval.</div></center>
+	</div>
+	<div class="row" ng-show="currentUser.role=='ADMIN'">
+	
+	<div class="col-md-2">		
+	<label style="align:left;font-size:16px;padding-left:50px;">Sort By:</label>
+</div>
+<div class="col-md-4" ng-show="currentUser.role=='ADMIN'">
+<div class="form-group">
+						<select ng-model="queryBy" style="padding-left:0px;width:30%;"  class="form-control" data-style="btn-info" title="Select one " class="pull pull-left">
+						<option value="$"> All</option>
+						<option value="blogTitle">Blog Title</option>
+						</select>
+						</div></div>
+	<div class="col-md-1">
+	<label  for="Search" style="font-size:16px;padding-left:20px;" >Search:</label></div>
+						<div class="col-md-5">						
+						<input ng-model="query[queryBy]" class="form-control" type="text" style="color:orange;padding-left:-1px;width:65%;padding-right:-10px;align:right" class="pull pull-right" >
+						</div><br><br><br>
 	</div>
 	<div>
+	
 		<table  align="center" ng-show="blogsWaitingForApproval.length>0" class="table table-hover" style="width:90%;">
-			<thead style="background-color:#009ACD;color:white;font-weight:bold;">
+			<thead style="background-color:#ff6005;color:white;font-weight:bold;">
 				<tr>
 					<td><span>Blog Title</span></td>
 					<td>Author</td>
@@ -28,21 +47,43 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="blogPost in blogsWaitingForApproval">
+				<tr ng-repeat="blogPost in blogsWaitingForApproval  | filter:query">
 					<td><a href="#/admin/getblog/{{blogPost.id}}">{{blogPost.blogTitle}}</a></td>
 					<td>{{blogPost.postedBy.firstname}} &nbsp;{{blogPost.postedBy.lastname}}</td>
 					<td>{{blogPost.postedOn | date:'medium'}}</td>
 			</tbody>
+			<div  ng-show="currentUser.role=='ADMIN'">
+			<div ng-show="!blogsWaitingForApproval.length">No  record available.</div>
+			</div>
 		</table>
+		
 	</div>
 <br>
 	<div>
-		<center><h3>List of  Approved Blogs </h3><br>
+		<span style="background-color:orange;"><center><h3 style="color:#ff6005;">List of Approved BlogPosts </h3></span><br>
 		<div class="alert alert-info" ng-if="blogsApproved.length==0">No  approved blogposts available.</div></center>
+	</div>
+		<div class="row">
+	
+	<div class="col-md-2">		
+	<label style="align:left;font-size:16px;padding-left:50px;">Sort By:</label>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+						<select ng-model="query1By" style="padding-left:0px;width:30%;"  class="form-control" data-style="btn-info" title="Select one " class="pull pull-left">
+						<option value="$"> All</option>
+						<option value="blogTitle">Blog Title</option>
+						</select>
+						</div></div>
+	<div class="col-md-1">
+	<label  for="Search" style="font-size:16px;padding-left:20px;" >Search:</label></div>
+						<div class="col-md-5">						
+						<input ng-model="query1[query1By]" class="form-control" type="text" style="color:orange;padding-left:-1px;width:65%;padding-right:-10px;align:right" class="pull pull-right" >
+						</div><br><br><br>
 	</div>
 	<div>
 		<table  align="center" ng-show="blogsApproved.length>0"  class="table table-hover" style="width:90%;">
-			<thead style="background-color:#009ACD;color:white;font-weight:bold;">
+			<thead style="background-color:#ff6005;color:white;font-weight:bold;">
 				<tr>
 					<td><span>Blog Title</span></td>
 					<td>Author</td>
@@ -50,12 +91,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="blogPost in blogsApproved">
+				<tr ng-repeat="blogPost in blogsApproved  | filter:query1">
 					<td><a href="#/getblog/{{blogPost.id}}">{{blogPost.blogTitle}}</a></td>
 					<td>{{blogPost.postedBy.firstname}} &nbsp;{{blogPost.postedBy.lastname}}</td>
 					<td>{{blogPost.postedOn | date:'medium'}}</td>
 			</tbody>
 		</table>
+		<br><br>
 	</div>
 	</div>
 	</div>

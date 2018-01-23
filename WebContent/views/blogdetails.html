@@ -3,9 +3,15 @@
 <title>Blog Details</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--  <link rel="stylesheet" href="css/background.css"> -->
+<link rel="stylesheet" href="css/background.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=initial">
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"  type="text/javascript"></script>
+<!-- css and js for profile picture -->
+<link   href="resources/css/fileinput.min.css" rel="stylesheet"  media="all" type="text/css">
+<link   href="js/themes/explorer/theme.css" rel="stylesheet"  media="all" type="text/css">
+<script src="js/fileinput.js" type="text/javascript"></script>
+<script src="js/themes/explorer/theme.js" type="text/javascript"></script>
 <style>
 .thumbnail {
     padding:0px;
@@ -35,19 +41,25 @@
 	border-right-color:#ddd;
 	border-width:8px;
 }
+.no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
 body,h1,h2,h3,h4,h5 {font-family: "initial", sans-serif}
 </style>
 <body class="w3-light-grey">
-<br><br><br>
+<br><br>
 <!-- w3-content defines a container for fixed size centered content, 
 and is wrapped around the whole page content, except for the footer in this example -->
 <div class="w3-content" style="max-width:1400px">
 
 <!-- Header -->
 <header class="w3-container w3-center w3-padding-32"> 
-  <h1><b style="color:white;padding-left:10px;">BLOGS &nbsp; SECTION</b></h1>
+  <h1><b style="color:white;padding-left:10px;">BLOGS &nbsp;
+ <img src="http://www.fillster.com/images/graphics/343t.gif" border="0" alt="Clipart Graphics for Myspace">
+   SECTION</b></h1>
  <center> <hr style="color:white;width:50px;font-size:40px;font-weight:bold;"></center>
-  <p style="color:white;">Feel free to like and comment on our  <span class="w3-tag">blog</span></p>
+  <p style="color:black;">Feel free to like and comment on our  <span class="w3-tag">blog</span></p>
 </header>
 
 <!-- Grid -->
@@ -55,14 +67,36 @@ and is wrapped around the whole page content, except for the footer in this exam
 <div class="col-md-2"></div>
 <!-- Blog entries -->
 
-<div class="w3-col l8 s12" style="padding-left:3px;">
+<div class="w3-col l9 s12" style="align:left;padding-right:100px;z-index:2;position: relative; overflow:hidden;">
   <!-- Blog entry -->
   <div class="w3-card-4 w3-margin w3-white">
- <br><center><h3><b style="color:#286090;">Blog Title:</b><b style="color:orange;"> {{blogPost.blogTitle}}</b></h3></center> 
+  <!-- Display blog image -->
+  <div class="container-fluid no-padding">
+  <div class="row">
+    <div class="col-md-12">
+    <img   class="img-responsive"  src="http://localhost:9090/collabmiddleware/getblogimage/{{blogPost.id}}"    alt=""  style="color:black;width:100%;;max-height:250px;">
+    </div>
+    </div></div>
+    <!-- End Display  -->
+ <br><h3 align="center"><b  style="color:#ff6005;align:center;">Blog Title:</b><b style="color:orange;align:center;"> {{blogPost.blogTitle}}</b>
+ </h3>
+ <!-- <a href="#/uploadblogimage/{{blogPost.id}}" ng-if="currentUser.username==blogPost.postedBy.username"><button   ng-show="currentUser.username==blogPost.postedBy.username" style="align:right;margin-left:700px;" class="w3-button w3-white w3-border w3-border-teal w3-round-large"  data-toggle="collapse" data-target="#blogimage">
+ <span class="glyphicon glyphicon-upload"></span> &nbsp;Upload Image</button></a> -->
+ <!-- Blog Image -->
+  <!-- <div  id="blogimage" class="collapse">
+  <h1  align="center" style="font-family:Algerian;align:center;"> Upload Blog Image</h1>
+<br>
+<div class="container">
+<input type="file" name="image"  width="20%" style="width:10%;size:40px;" class="file" data-upload-url="http://localhost:9090/collabmiddleware/uploadblogimage/{{blogPost.id}}"
+data-preview-file-type="any">
+  </div>
+  </div> -->
+  <!--End  Blog Image-->
+
     <div class="w3-container">    
-      <h5>Post By : &nbsp;{{blogPost.postedBy.firstname}} &nbsp;{{blogPost.postedBy.lastname}}&nbsp;&nbsp;
+      <h5>Post By : <img  src="http://localhost:9090/collabmiddleware/getimage/{{blogPost.postedBy.username}}" alt="" onerror="this.src='images/profilepic2.png'" class="img-circle" style="width:50px;height:50px;"> &nbsp;{{blogPost.postedBy.firstname}} &nbsp;{{blogPost.postedBy.lastname}}&nbsp;&nbsp;
        <span class="w3-opacity">
-   <span style="padding-left:390px;">&nbsp;<span class="glyphicon glyphicon-time"></span>&nbsp;{{blogPost.postedOn | date:'medium'}}</span></span></h5><hr>
+   <span style="padding-left:330px;">&nbsp;<span class="glyphicon glyphicon-time"></span>&nbsp;{{blogPost.postedOn | date:'medium'}}</span></span></h5><hr>
     </div>
 
     <div class="w3-container">
@@ -81,13 +115,6 @@ and is wrapped around the whole page content, except for the footer in this exam
                      &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up" style="font-size:18px;color:blue;"></span>&nbsp;{{blogPost.likes}}</span></p>
          
       
-          <!-- Change colour of glyphicon if user has liked the post -->
-          <!-- <span ng-show="liked">
-          <span class="glyphicon glyphicon-thumbs-up" style="font-size:20px;color:black"></span></span>
-          <span ng-show="!liked">
-          <span class="glyphicon glyphicon-thumbs-up" style="font-size:20px;color:blue"></span></span>
-          </span> -->
-          &nbsp;&nbsp;<!-- <b>Like</b></button> -->
 
         </div>
         
@@ -119,22 +146,20 @@ and is wrapped around the whole page content, except for the footer in this exam
           
 <div class="container"  ng-show="showComment">
 <div class="w3-row">
-<h3 style="color:#286090;align:left;"> Blog Comments :</h3></div>
-<!-- <div class="row">
-<div class="col-sm-12">
-</div>/col-sm-12
-</div>/row -->
+<h4 ng-show="blogPost.blogComments.length==0" style="font-family:Impact,Charcoal,sans-serif;font-size:20px;">No Comments.</h4>
+<h2 style="color:#286090;align:left;font-family:Impact,Charcoal,sans-serif;font-size:22px;"  ng-show="blogPost.blogComments.length>0">&nbsp;&nbsp; Comments :</h2></div><br>
 <div class="w3-row"  ng-repeat="comment in blogPost.blogComments | orderBy:'-commentedOn'">
 
 <div class="col-sm-1">
 <div class="thumbnail">
-<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+<img  src="http://localhost:9090/collabmiddleware/getimage/{{comment.commentedBy.username}}" alt="" onerror="this.src='https://ssl.gstatic.com/accounts/ui/avatar_2x.png'"  style="width:50px;height:55px;">
+<!-- <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"> -->
 </div><!-- /thumbnail -->
 </div><!-- /col-sm-1 -->
 <div class="col-sm-7">
 <div class="panel panel-default">
 <div class="panel-heading">
-<strong>{{comment.commentedBy.username}}</strong> <span class="text-muted" style="padding-left:400px;">{{comment.commentedOn | date: 'medium'}}</span>
+<strong>{{comment.commentedBy.username}}</strong> <span class="text-muted" style="padding-left:370px;">{{comment.commentedOn | date: 'medium'}}</span>
 </div>
 <div class="panel-body" style="font-weight:normal;">
 {{comment.commentTxt}}
@@ -142,22 +167,7 @@ and is wrapped around the whole page content, except for the footer in this exam
 </div><!-- /panel panel-default -->
 </div><!-- /col-sm-5 -->
 
-<!-- <div class="col-sm-1">
-<div class="thumbnail">
-<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-</div>/thumbnail
-</div>/col-sm-1 -->
-<!-- 
-<div class="col-sm-5">
-<div class="panel panel-default">
-<div class="panel-heading">
-<strong>myusername</strong> <span class="text-muted">commented 5 days ago</span>
-</div>
-<div class="panel-body">
-Panel content
-</div>/panel-body
-</div>/panel panel-default
-</div>/col-sm-5 -->
+
       </div>
     </div>
   
@@ -169,6 +179,6 @@ Panel content
 
 <!-- END w3-content -->
 </div>
-
+</div></div>
 </body>
 </html>

@@ -1,26 +1,158 @@
-<div class="container">
-{{error.message}}
-<form>
-<pre>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Job Form</title>
+<!-- CORE CSS-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/register.css">
 
-Enter JobTitle:<input type="text" ng-model="job.jobTitle">
-Enter Description:<textarea rows="3" cols="15" ng-model="job.jobDescription"></textarea>
-Enter Skills Required:<input type="text" ng-model="job.skillsrequired">
-Enter Location:<input type="text" ng-model="job.location">
-Enter Company name:<input type="text" ng-model="job.companyname">
-Enter Salary:<input type="text" ng-model="job.salary">
-Enter Years of experience:<input type="text" ng-model="job.yrsofExp">
-<input type="submit" value="Add Job" ng-click="addJob()">
+<style>
+.panel-body .form-group .col-md-4{
+align:center;
+text-align:center;
+}
+</style>
+</head>
+
+<body bgcolor="blue"  style="padding-top:30px;">
+<br><br>
+<div class="alert alert-danger" ng-if="error"><center>{{error.message}}</center></div>
+	<div id="login-page" class="row">
+			<div class="row">
+				<br> <br> <br>
+				<div class="col-md-3"></div>
+				<div class="panel panel-default col-md-6" >
+
+					<form class="form-horizontal" method="post" name="jobform" style="z-index:2;position: relative; overflow:hidden;"  novalidate>
+						<div class="row">
+							<div class="panel-heading">
+								<div class="input-field col s12 center">
+									<img src="images/graduate.png" width="180" height="110"
+										alt=""  align="center" class="img-responsive center-block"  class="responsive-img valign profile-image-login">
+									<br> <br>
+									<p class="center login-form-text"
+										style="color: #ff6005;font-size: 20px;text-align:center">Post New Job</p>
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<div class="col-md-4">
+									<i class="mdi-social-person-outline prefix"></i> <label
+										for="jobtitle" class="center-align">Job Title :</label>
+								</div>
+								<div class="col-md-8">
+									<input id="jobtitle" type="text" class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/"
+										required placeholder="Job Title " name="jobtitle"
+										ng-model="job.jobTitle" class="validate">
+											<span ng-show="jobform.jobtitle.$touched && jobform.jobtitle.$error.required"> Job Title is required.</span>
+											<span ng-show="jobform.jobtitle.$touched && jobform.jobtitle.$error.pattern">Job Title is invalid </span>
+
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-4">
+									<i class="mdi-social-person-outline prefix"></i> <label
+										for="JobDescription" class="center-align">Job Description :</label>
+								</div>
+								<div class="col-md-8">
+								<textarea  name="jobdesc" rows="3" cols="6" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" class="form-control" class="validate" required ng-model="job.jobDescription" placeholder="Job Description "></textarea>
+									<span ng-show="jobform.jobdesc.$touched && jobform.jobdesc.$error.required"> Job Description is required.</span>
+									<span ng-show="jobform.jobdesc.$touched && jobform.jobdesc.$error.pattern">Job description is invalid </span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-4">
+								<label for="skills required" class="center-align">Skills Required:</label>																	
+								</div>
+								<div class="col-md-8">
+									<input id="username" type="text" class="form-control" name="skills" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/"
+										class="validate" required  placeholder="Skills Required"
+										ng-model="job.skillsrequired"> 
+										<span ng-show="jobform.skills.$touched && jobform.skills.$error.required"> Job Skills is required.</span>
+										<span ng-show="jobform.skills.$touched && jobform.skills.$error.pattern"> Job Skills is invalid</span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-4">
+									   <label for="Location" >Location :</label>
+								</div>
+								<div class="col-md-8">
+									<input id="location" type="text" class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/"
+										placeholder="Location" required name="location"
+										ng-model="job.location" class="validate">
+										<span ng-show="jobform.location.$touched && jobform.location.$error.required">Location is required.</span>
+										<span ng-show="jobform.location.$touched && jobform.location.$error.pattern">Location is invalid </span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-4">								
+									 <label for="companyname" class="center-align">Company Name :</label> 
+								</div>
+								<div class="col-md-8">
+									<input id="companyname" type="text" class="form-control" name="company"
+										class="validate" required placeholder="Company Name" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/"
+										ng-model="job.companyname"> <span style="color: red"
+										ng-if="error.code==3">{{error.message}}</span>
+											<span ng-show="jobform.company.$touched && jobform.company.$error.required">Company is required.</span>
+											<span ng-show="jobform.company.$touched && jobform.company.$error.pattern">Company Name is invalid </span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-4">
+									 <label for="salary">Salary (in Rupees) :</label>
+								</div>
+								<div class="col-md-8">
+									<input id="phone" type="text" class="form-control" name="salary" pattern="[1-9][0-9]{4}"
+										required placeholder="Salary"
+										ng-model="job.salary">
+										<span ng-show="jobform.salary.$touched && jobform.salary.$error.required">Salary is required.</span>
+										<span ng-show="jobform.salary.$touched && jobform.salary.$error.pattern">Salary should be  in  this <small> <b style="color:red;"> 30000</b></small> format.</span>
+								</div>
+							</div>							
+							<div class="form-group">
+								<div class="col-md-4">
+									<label for="yrsofExp">Years of Experience :</label>
+								</div>
+								<div class="col-md-8">
+									 <input id="yrsofExp" name="yrsofExp" placeholder="Years of Experience" class="form-control"  pattern="[0-9]{2}"
+										type="text"  ng-model="job.yrsofExp" />
+										<span ng-show="jobform.yrsofExp.$touched && jobform.yrsofExp.$error.required">Experience is required.</span>
+										<span ng-show="jobform.yrsofExp.$touched && jobform.yrsofExp.$error.pattern">Experience should be in digits.</span>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="input-field col s12" align="center">
+									<br>
+									<input type="submit" value="Add Job" style="align:center"
+										class="btn btn-warning" ng-click="addJob()" ng-disabled="jobform.$invalid">									
+									<br><br>
+								</div>
+									<div class="input-field col s12" align="center">
+								<p></p></div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<br><br><br>
+				<div class="col-md-3"></div>
+		
+			</div>
+			
+	 		
+	</div>
+<br><br><br>
 
 
+</body>
 
-
-
-
-
-
-
-
-</pre>
-</form>
-</div>
+</body>
+</html>

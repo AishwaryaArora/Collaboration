@@ -1,22 +1,50 @@
-<div class="container">
-
-<form>
-
-<div class="form-group">
-Enter Blog Title
-<input type="text" ng-model="blog.blogTitle" class="form-control">
-</div>
-
-<div class="form-group">
-Enter Blog Content
-<textarea ng-model="blog.blogContent" class="form-control"></textarea>
-</div>
-
-<input type="submit" ng-click="saveBlog()">
-
-</form>
-
-
-
-
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Blog Form</title>
+<link rel="stylesheet" href="css/background.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+body {
+	font-family: initial;
+}
+</style>
+</head>
+<body style="padding-top: 30px;">
+	<br><br>
+	<!-- Header -->
+<header class="w3-container w3-center w3-padding-32"> 
+  <h1 align="center"><b style="color:white;padding-left:10px;">Add &nbsp;Blog
+   <img  src="http://www.fillster.com/images/graphics/282g.gif" border="0" >
+  </b></h1>
+ <center> <hr style="color:white;width:54px;font-size:40px;font-weight:bold;">
+ </center>
+</header>
+	<div class="container"  style="z-index:2;position: relative; overflow:hidden;">
+		<div class="row">
+			<div class="panel panel-default">
+			 <div class="panel-heading">
+					<h3  align=center style="align:center;color:orange;font-weight:bold;">Add Blog</h3>
+				
+				</div>
+				<div class="panel-body">
+				<form name="blogform" novalidate>
+					<div class="form-group">
+						<!-- Enter Blog Title: --> <br><input name="blogTitle" type="text" placeholder="Enter Blog Title" ng-model="blog.blogTitle"
+							class="form-control">
+							<span ng-show="blogform.blogTitle.$touched && blogform.blogTitle.$error.required">Blog Title is required </span>
+					</div>
+					<div class="form-group">
+						<!-- Enter Blog Content : --><br>
+						<textarea class="form-control" rows="5"  name="blogContent" placeholder="Enter Blog Content" ng-model="blog.blogContent"></textarea>
+						<span ng-show="blogform.blogContent.$touched && blogform.blogContent.$error.required">Blog Content is required </span>
+					</div>
+					<input type="submit" class="btn btn-warning"  style="width:150px;"  ng-click="saveBlog()" value="Add Blog" ng-disabled="blogform.$invalid">
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
