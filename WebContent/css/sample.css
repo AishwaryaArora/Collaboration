@@ -1,0 +1,126 @@
+@CHARSET "ISO-8859-1";
+.rw-number-notification{
+	position:absolute;
+	top:-8px;
+	right:-6px;
+	padding: 3px 3px 2px 3px;
+	background-color: red;
+	color: white;
+	font-family: arial;
+	font-weight: bold;
+	font-size: 10px;
+	border-radius: 4px;
+	box-shadow: 1px 1px 1px silver;
+}
+
+.default{
+	color:black;
+}
+
+.liked{
+	color:blue;
+}
+
+.border { border-style:none; }
+
+.dropdown a img{
+border: 0;
+border-color: #286090;
+}
+
+.navbar-collapse collapse ul li a img{
+border: 0;
+}
+
+.navbar-collapse collapse ul li a {
+	align: center;
+	font-family: initial;
+	font-weight: bold;
+	font-size: 18px;
+	color: white;
+	text-decoration: none;
+	background-color: #286090;
+	outline: none;
+}
+
+body {
+	text-decoration: none;
+	outline: none;
+}
+
+.nav navbar-nav navbar-left li a {
+	align: center;
+	font-family: initial;
+	font-weight: bold;
+	font-size: 18px;
+	color: white;
+	text-decoration: none;
+	background-color: #286090;
+	outline: none;
+	border: none;
+	padding-top: 25px;
+}
+
+.dropdown:hover .dropdown-menu{
+display:block;
+}
+
+.dropdown {
+	background-color: #286090;
+	text-decoration: none;
+	color: white;
+	outline: none;
+	border: none;
+}
+
+.dropdown-menu a {
+	font-size: 17px;
+	display:block;
+}
+
+.dropdown-menu a :hover {
+	background-color: #286090;
+	color: white;
+}
+
+.ul ul li a {
+	color: white;
+	text-decoration: none;
+	font-weight: normal;
+	font-size: 20px;
+	padding-top: 28px;
+	text-align: bottom;
+	background-color: #286090;
+	text-decoration: none;
+	outline: none;
+}
+.ul ul li form {
+	padding-top: 28px;
+	text-align: bottom;
+	background-color: #286090;
+	text-decoration: none;
+	outline: none;
+	border: none;
+}
+
+.nav navbar-nav navbar-left li a {
+	color: white;
+	font-family: initial;
+	font-weight: bold;
+	padding-top: 30px;
+	background-color: #286090;
+	text-decoration: none;
+	outline: none;
+	border: none;
+}
+
+.notify .dropdown-menu>li>a {
+   width: 20em; 
+    word-wrap:break-word;
+    white-space: normal;
+     max-width:24em;
+}
+
+.dropdown-menu{
+    max-width:1000px;
+}

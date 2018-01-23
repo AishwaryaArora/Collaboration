@@ -1,95 +1,442 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
-<meta charset="ISO-8859-1">
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
+<title>Connect</title>
+ <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+<link rel="stylesheet" href="css/rightleftnavbar.css">
+<link rel="stylesheet" href="css/index.css">
 <link rel="stylesheet" href="css/sample.css">
+<link rel="stylesheet" href="css/chatbox.css">
 
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	type="text/javascript"></script>
-<link
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"
-	rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/common/portfolio.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="js/chatbox.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/js/bootstrap-select.min.js"></script>
+<style>
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: red;
+   color: white;
+   text-align: center;
+}
+ .glyphicon-one-fine-green-dot:before {
+    content:"\25cf";
+    font-size: 1.8em;
+    color:#32CD32;
+    align:bottom;
+    margin-top:50em;
+    overflow: hidden;
+   
+}
+</style>
 
-<title>Connect!</title>
+<script>
+$(document).on('click', '.panel-heading span.icon_minim', function (e) {
+    var $this = $(this);
+    if (!$this.hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body').slideUp();
+        $this.addClass('panel-collapsed');
+        $this.removeClass('glyphicon-minus').addClass('glyphicon-plus');
+    } else {
+        $this.parents('.panel').find('.panel-body').slideDown();
+        $this.removeClass('panel-collapsed');
+        $this.removeClass('glyphicon-plus').addClass('glyphicon-minus');
+    }
+});
+$(document).on('focus', '.panel-footer input.chat_input', function (e) {
+    var $this = $(this);
+    if ($('#minim_chat_window').hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body').slideDown();
+        $('#minim_chat_window').removeClass('panel-collapsed');
+        $('#minim_chat_window').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+    }
+});
+$(document).on('click', '#new_chat', function (e) {
+    var size = $( ".chat-window:last-child" ).css("margin-left");
+     size_total = parseInt(size) + 400;
+    alert(size_total);
+    var clone = $( "#chat_window_1" ).clone().appendTo( ".container" );
+    clone.css("margin-left", size_total);
+});
+$(document).on('click', '.icon_close', function (e) {
+    //$(this).parent().parent().parent().parent().remove();
+    $( "#chat_window_1" ).remove();
+});
+function myFunction(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+ 
+/* $(function(){
+  $("#includedContent").load("chatbox.html"); 
+});
+ */
+// Script to open and close sidebar
+function openRightMenu() {
+    document.getElementById("rightMenu").style.display = "block";
+}
+function closeRightMenu() {
+    document.getElementById("rightMenu").style.display = "none";
+}
+</script>
 </head>
-<body ng-app="app">
-<header>
-            <nav class="navbar navbar-default">
-            
-           <div class="container-fluid">
-		<button type="button" class="navbar-toggle collapsed" 
-   data-toggle="collapse" data-target="#collapse-example" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#/home">Connect!</a>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		style="background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%); border-color: linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);height:11%;">
+		<div class="container-fluid" style="height:10%;">
+			<div class="navbar-header">
+				<a class="navbar-brand" data-tooltip="Homepage" title="Homepage"
+					style="padding-top: 18px; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%)" href='#/home'>
+					<img src="images/studentlogo.png" width="135" height="90" />
+				</a>
+			</div>
+			<ul class="nav navbar-nav navbar-left" style="position:relative;">
+
+					
+					<li class="dropdown" ng-show="currentUser.username"
+					style="padding-top:9px; font-weight: bold; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);">
+
+					<a class="dropdown-toggle"
+					style="color: white; font-weight: bold; text-decoration: none; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%); font-size: 17px;"
+					data-toggle="dropdown" href="">
+					<span class="glyphicon glyphicon-education" style="font-size: 19px"></span>&nbsp;&nbsp;Job <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li ng-if="currentUser.role=='ADMIN'"><a href="#/addjob">Add Job</a></li>
+						<li><a href="#/alljobs">Get All Jobs</a></li>
+					</ul>
+				</li>
+				
+					
+				<li class="dropdown" ng-show="currentUser.username"
+					style="padding-top:6px; font-weight: bold; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);">
+
+					<a class="dropdown-toggle"
+					style="color: white; font-weight: bold; text-decoration: none;border-style:none; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%); font-size: 17px;"
+					data-toggle="dropdown" href="">
+					<!-- <img src="" width="33" height="28" style="background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);text-decoration:none;border:0;" >		
+					  -->&nbsp;<i
+							class="fa fa-envelope" style="font-size: 19px"></i>&nbsp;&nbsp;Blog <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="#/addblog">Add Blog</a></li>
+						<li><a href="#/getblogs">Get All Blogs</a></li>
+					</ul>
+				</li>
+				
+				<!--Notifications  -->
+				<li class="dropdown" ng-show="currentUser.username" 
+					style="padding-top: 7px; font-weight: bold; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);">
+					<a   href=" " class="dropdown-toggle" data-toggle="dropdown"
+					style="color: white; font-weight: bold; text-decoration: none;border-style:none; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);" >
+					<span class="glyphicon glyphicon-globe" style="font-size:20px;" ng-click="updateLength()" >
+					<span class="rw-number-notification" ng-if="notificationNotViewedLength>0  || notificationNotViewedLikeLength>0  || notificationNotViewedCommentLength>0  ">
+					{{notificationNotViewedLength  -- notificationNotViewedLikeLength -- notificationNotViewedCommentLength }}</span></span></a>
+					<span class="notify">
+					<ul class="dropdown-menu">
+					  <li class="dropdown-header" style="font-size:15px;">Notifications</li>
+					  <li class="divider"></li>						 
+						 <li ng-repeat="notification in notificationNotViewedLike" style="background-color:#F0F8FF"  tabindex="-1">
+						<a href="" ng-click="updateNotificationLike(notification.id)" style="color:red;background-color:#F0F8FF">
+						 <b> '{{notification.likedBy.firstname}} &nbsp;{{notification.likedBy.lastname}} '</b> liked your post <b>"{{notification.blogTitle}}"</b>
+						</a></li>
+						 <li ng-if="notificationNotViewedLikeLength>0" class="divider"></li>
+						 
+						 <li ng-repeat="notification in notificationViewedLike"   tabindex="-1">
+						<a href="" ng-click=" " style="color:blue">
+						<b> '{{notification.likedBy.firstname}}&nbsp;{{notification.likedBy.lastname}}'</b> liked your post <b>"{{notification.blogTitle}}"</b>
+						</a></li>
+						   <li ng-if="notificationViewedLikeLength>0" class="divider"></li>
+						   
+						   <li ng-repeat="notification in notificationNotViewedComment" style="background-color:#F0F8FF"  tabindex="-1">
+						<a href="" ng-click="updateNotificationComment(notification.id)" style="color:red;background-color:#F0F8FF">
+						<b>'&nbsp;<img  class="img-circle"  src="http://localhost:9090/collabmiddleware/getimage/{{notification.commentedBy.username}}" >
+					 <!-- alt="" onerror="this.src='images/profilepic2.png'" width="37" height="35" style="color:white;" --> {{notification.commentedBy.firstname}} {{notification.commentedBy.lastname}}' </b>commented on your post <b>"{{notification.blogTitle}}"</b>
+						</a></li>
+						 <li ng-if="notificationNotViewedCommentLength>0" class="divider"></li>
+						 
+						 <li ng-repeat="notification in notificationViewedComment"   tabindex="-1">
+						<a href="" ng-click=" " style="color:blue">
+						<b> '{{notification.commentedBy.firstname}} {{notification.commentedBy.lastname}}' </b> commented on your post <b>"{{notification.blogTitle}}"</b>
+						</a></li>
+						   <li ng-if="notificationViewedCommentLength>0" class="divider"></li>
+						   
+
+						<li ng-repeat="notification in notificationNotViewed" style="background-color:#F0F8FF"  tabindex="-1">
+						<a href="" ng-click="updateNotification(notification.id)" style="color:red;background-color:#F0F8FF">
+						Your blog titled <b>"{{notification.blogTitle}}"</b> is {{notification.approvalStatus}} <span ng-if="notification.rejectionReason!=null"> due to  {{notification.rejectionReason}}
+						</span>
+						</a></li>
+						  <li  ng-if="notificationNotViewedLength>0" class="divider"></li>
+						<li ng-repeat="notification in notificationViewed"  tabindex="-1">
+						<a href="" ng-click="" style="color:blue">
+						Your blog titled <b>"{{notification.blogTitle}}"</b> is {{notification.approvalStatus}} <span ng-if="notification.rejectionReason!=null"> due to  {{notification.rejectionReason}}
+						</a></li>						
+					</ul>
+					</span>				
+					</li>
+					
+					<!--Job notifications  -->
+					<li class="dropdown" ng-hide="currentUser.role=='ADMIN' || !currentUser.username" 
+					style="padding-top:7px; font-weight: bold; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);"  ng-click="updateLength()">
+					<a   href=" " class="dropdown-toggle" data-toggle="dropdown"
+					style="color: white; font-weight: bold; text-decoration: none;border-style:none; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%); font-size:17px;" >
+					<span class="glyphicon glyphicon-bell" style="font-size:20px;"  >
+						<span class="rw-number-notification" ng-if="jobnotifications.length>0">{{jobnotifications.length}}</span></span></a>
+						<span class="notify">
+						<ul class="dropdown-menu">
+					  <li class="dropdown-header" style="font-size:15px;"> Job Notifications</li>
+					  <li class="divider"></li>
+					  <li ng-repeat="job in jobnotifications" style="background-color:#F0F8FF"  tabindex="-1">
+						<a href="#/getJob/{{job.id}}" ng-click="addnotifiedUser(job.id)" style="color:red;background-color:#F0F8FF">
+						New Job for <b>"{{job.jobTitle}}"</b> is available for you to apply .
+						</a></li></ul></li>
+						
+						<!-- Friend  -->
+						<li class="dropdown" ng-show="currentUser.username" 
+					style="padding-top: 10px; font-weight: bold; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);">
+						<a href="" class="dropdown-toggle" data-toggle="dropdown" ng-show="currentUser.username" >
+						<i class="fa fa-users " style="font-size:20px;color:white;"></i>&nbsp;&nbsp;<span class="caret" style="color:white;"></span></a>
+						<ul class="dropdown-menu">
+						<li><a href="#/suggestedusers">List of suggested users</a></li>
+							<li><a href="#/pendingrequests">Pending Requests</a></li>
+						<li><a href="#/friends">Friends List</a></li></ul>
+						</li>
+						
+						
+						<!--Chat  -->
+						<li class="dropdown" ng-show="currentUser.username" 
+					style="padding-top:8px; font-weight: bold; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);">
+						<a href="#/chat" ng-show="currentUser.username"
+						style="color: white; font-weight: bold; text-decoration: none;border-style:none; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%); font-size: 17px;">
+                        <!-- <img src="images/chat.jpg"  width="33" height="26" style="background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);text-decoration:none;border:0;"/> --> &nbsp; <i class="fa fa-commenting" style="font-size: 19px"></i>&nbsp;&nbsp;Chat </a>
+						</li>
+						
+						<li> </li>
+								<!-- Search bar -->
+				
+				<li  ng-show="currentUser.username"
+					style="padding-top: 15px; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%); padding-top: -4px;"> 
+					<div ng-controller="FriendController">
+					<a class="dropdown-toggle" data-toggle="dropdown">
+					<form class="navbar-form navbar-right" style="padding-right: 30px"
+						role="search">
+						<div class="form-group input-group">
+							<div class="search">
+								<input ng-model="Search" type="text" class="form-control" style="padding-left:0px;width:150%;" placeholder=" &nbsp; Find Friends..">
+							   <!-- <div class="input-group-btn">
+                                 <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search" style="height:10%;"></i></button>
+                               </div> -->
+							</div>
+							<!-- <span class="input-group-btn" style="color:black;align:right;">
+								
+									<span class="glyphicon glyphicon-search" style="color:white;height:10%;"></span>
+							</span> -->
+						</div>
+					</form>
+					</a>
+					<ul   ng-show="Search.length> 0"  class="dropdown-menu" class=" w3-bar-block w3-card w3-animate-center"  ng-show="suggestedusers.length>0" style="background-color:white;color:black;">
+					<table   ng-show="Search.length> 0"   class="table" style="background-color:white;color:black;padding-top:30px;width:300px;" >
+					<tbody>
+<tr ng-repeat="user in suggestedusers | filter:Search  as  filtered_result1" ><!-- suggestedusers is List<User>,user is user object -->
+<td> <img  class="img-circle"  src="http://localhost:9090/collabmiddleware/getimage/{{user.username}}" > <!-- alt="" onerror="this.src='images/profilepic2.png'" width="30" height="30" style="color:white;" --> &nbsp; &nbsp;</td>
+<td  class="text-capitalize"><a href="#/getUser/{{user.username}}"  style="color:#2E86C1;font-size:18px;">{{user.firstname}} &nbsp; {{user.lastname}}</a></td>
+</tr>
+<tr ng-repeat="user in friends | filter:Search as filtered_result2 ">
+<td> <img  class="img-circle"  src="http://localhost:9090/collabmiddleware/getimage/{{user.username}}">  <!-- alt="" onerror="this.src='images/profilepic2.png'" width="30" height="30" style="color:white;"> --> &nbsp; &nbsp;</td>
+<td  class="text-capitalize"><a href="#/getUser/{{user.username}}"  style="color:#2E86C1;font-size:18px;">{{user.firstname}} &nbsp; {{user.lastname}}</a>
+ <span style="color: #2E86C1;background-color:white;font-size:13px;">Friends </span>
+</td>
+</tr>
+<tr ng-repeat="user in pendingRequests| filter:Search  as  filtered_result3 ">
+<td> <img  class="img-circle"  src="http://localhost:9090/collabmiddleware/getimage/{{user.fromId}}">  <!-- alt="" onerror="this.src='images/profilepic2.png'" width="30" height="30" style="color:white;"> --> &nbsp; &nbsp;</td>
+<td  class="text-capitalize"><a href="#/getUser/{{user.fromUser.username}}"  style="color:#2E86C1;font-size:18px;"> {{user.fromUser.firstname}} &nbsp; {{user.fromUser.lastname}}  </a>
+ <span style="color: #2E86C1;background-color:white;font-size:13px;">Friend Request Pending </span> </td>
+ </tr>
+ <tr ng-repeat="user in sentRequests| filter:Search  as  filtered_result4 ">
+ <td ng-show="user.fromUser.username==currentUser.username"><img  class="img-circle"  src="http://localhost:9090/collabmiddleware/getimage/{{user.toUser.username}}"  alt="" onerror="this.src='images/profilepic2.png'" width="30" height="30" style="color:white;"> &nbsp; &nbsp;</td>
+<td  class="text-capitalize"><a href="#/getUser/{{user.toUser.username}}"  style="color:#2E86C1;font-size:18px;"> {{user.toUser.firstname}} &nbsp; {{user.toUser.lastname}}  </a>
+ <span style="color: #2E86C1;background-color:white;font-size:13px;">Friend Request Sent </span> </td>
+</tr>
+</tbody>
+					</table>
+					<div ng-hide="filtered_result1.length == 0 || filtered_result2.length==0 || filtered_result3.length==0 || filtered_result4.length==0 ">  Showing  {{(suggestedusers  | filter:Search).length  -- (friends | filter:Search).length  -- (pendingRequests  | filter:Search).length -- (sentRequests  | filter:Search).length}}  of  {{suggestedusers.length -- friends.length -- pendingRequests.length -- sentRequests.length }} </div> 
+					<div  ng-show="filtered_result1.length == 0 && filtered_result2.length==0 && filtered_result3.length==0 && filtered_result4.length==0 " style="align:center;color:#286090;font-weight:bold;" > &nbsp; &nbsp;<span style="padding-left:20px;"> No records available. </span></div>
+									
+					</ul>
+						</div>
+					 </li>
+						</ul>		
+
+			<ul class="nav navbar-nav navbar-right" style="height:12%;">
+			
+				
+			<!--user profile  -->
+			
+				<li ng-show="currentUser.username" class="dropdown"
+					style="padding-top:0px;font-weight: bold; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);">
+					<a title="My Profile" class="dropdown-toggle" data-toggle="dropdown"
+                     style="color: white; font-weight: bold; text-decoration: none;border-style:none; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);font-size: 17px;"
+					 ng-show="currentUser.username" >
+					<img  class="img-circle"  src="http://localhost:9090/collabmiddleware/getimage/{{currentUser.username}}" 
+					 alt="" onerror="this.src='images/profilepic2.png'" width="37" height="35" style="color:white;">
+				<span class="text-capitalize">  &nbsp;{{currentUser.firstname}}&nbsp;{{currentUser.lastname}}</span> 
+				</a>
+				<ul class="dropdown-menu">
+				<li><a href="#/editprofile"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit Profile</a></li>
+				<li><a href="" ng-click="logout()" ng-show="currentUser.username"> <span
+						class="glyphicon glyphicon-log-out" style="font-size: 17px"></span>
+						&nbsp;Logout</a></li>
+						</ul>
+				</li>
+				<li style="padding-top: 13px; font-weight: bold;">
+				<a href="#/register" ng-hide="currentUser.username" class="tooltipped"
+					data-tooltip="Sign Up" data-position="bottom" title="Sign Up"
+					style="color:white; text-decoration: none; background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%); font-size: 17px;">&nbsp;Sign
+						Up</a><br></li>
+						
+				<li
+					style="background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);font-weight:bold;padding-top:13px;height:11%;">
+					<a href="#/login" title="Sign In" ng-hide="currentUser.username"
+					class="tooltipped" data-position="bottom" data-tooltip="Sign in"
+					style="color:white;text-decoration: none;background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);font-size: 17px;"><span
+						class="glyphicon glyphicon-log-in"
+						style="height:11%;font-weight: normal;"></span>&nbsp;&nbsp;Sign
+						in</a><br>
+				</li>
+				
+				<!-- Sidebar/menu -->
+					<li
+					style="background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);font-weight:bold;padding-top:6px;height:11%;" ng-show="currentUser.username">
+					<div ng-controller="ChatController" ng-if="currentUser.username" id="includedContent">
+					<a href="" title="View Friends Online" ng-show="currentUser.username"
+					 data-position="bottom"  style="color:white;text-decoration: none;background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);">
+					<button class="w3-button w3-#286090 w3-xlarge w3-right" onclick="openRightMenu()">&#9776;</button>
+				<br><div class="w3-sidebar w3-bar-block w3-card w3-animate-right"
+					style="display: none; right: 0;margin-top:20px;width:17%;" id="rightMenu">
+					<button onclick="closeRightMenu()" class="w3-bar-item w3-button w3-large" style="font-weight:normal;color:orange;">Close  <span  style="align:right;color:orange;padding-left:124px;"class="glyphicon glyphicon-remove"></span></button>
+					<br>
+					<a   style="align:center;color:orange;padding-left:60px;padding-top:50px;font-size:18px;">  Friends Online </a>
+					 <hr>
+					
+  			  
+  			    
+					 <div class="row" ng-repeat="user in users"> 
+					 	
+					 <a      class="w3-bar-item w3-button" >
+					 <img  class="img-circle"  src="http://localhost:9090/collabmiddleware/getimage/{{user}}" 
+					 alt="" onerror="this.src='images/profilepic2.png'" width="37" height="35" style="color:white;"/> &nbsp;&nbsp;{{capitalize(user)}} 
+					<span class="pull pull-right" ><span class="glyphicon glyphicon-one-fine-green-dot" style="align:top; bottom:20;padding-right:0px;"></span></span>
+				
+			
+               </a> 
+   </div>
+					
+				</div>
+				</a>
+				</div></li>
+					
+			</ul>
+		</div>
+	</nav>
+
+	
+	
+	<div ng-view></div>
+
+	<span  ng-show="showit"> <div class="container" ng-show="currentUser.username"   ng-controller="ChatController" class="collapse" id="chat"  class="w3-container w3-hide" >
+    <div class="row chat-window col-xs-6 col-md-3" id="chat_window_1" style="margin-left:990px;margin-bottom:20px;position:fixed;z-index:1;">
+        <div class="col-xs-12 col-md-12">
+        	<div class="panel panel-default">
+                <div class="panel-heading top-bar">
+                    <div class="col-md-7 col-xs-8" >
+                     <form role="form" id="chatForm" ng-submit="sendMessage(chat)">
+                        <h3 class="panel-title">
+                      
+                        <span class="glyphicon glyphicon-comment"></span> <span style="color:black">Chat </span> -  <select class="form-control" id="to" name="to" ng-model="chat.to">
+  			    	<option value="">Select Recipient</option>
+              <option value="all">All Users</option>
+  			    	<option ng-repeat="user in users" value="{{user}}"   onclick="myFunction('chat')"  ng-click="startChat(user)">{{capitalize(user)}}</option>
+  			    </select></h3>
+                    </div>
+                    <div class="col-md-5 col-xs-4" style="text-align:right;">
+                        <a><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim"></span></a>
+                        <a><span  id="minim_chat_window"class="glyphicon glyphicon-remove icon_close" data-id="chat_window_1"></span></a>
+                    </div>
                 </div>
-<div class="collapse navbar-collapse" id="collapse-example">
-                <ul class="nav navbar-nav ">
-                <!-- ng-show="true" if currentUser.username is not undefined otherwise ng-show="false" -->
-                <li><a href="" ng-show="currentUser.username">Welcome {{currentUser.username}}</a></li>
-                <li><a href="#/editprofile" ng-show="currentUser.username">Edit User Profile</a></li>
+                  
+                  <div class="alert alert-info notification" id="joinedChat" ng-if="latestUser" ng-animate="{enter: 'fade', leave: 'fade'}">
+            {{latestUser}} has joined the chat!
+          </div>
+                <div class="panel-body msg_container_base">
                 
-                <li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" ng-show="currentUser.username">
-                Job <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                <li><a href="#/addjob" ng-show="currentUser.role=='ADMIN'">Add Job</a></li>
-                <li><a href="#/alljobs">Get All Jobs</a></li>
-                
-                </ul></li>
-                
-                <li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" ng-show="currentUser.username">
-                Blog <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-               <li><a href="#/addblog">Add Blog</a></li>
-               <li><a href="#/getblogs">Get All Blogs</a></li>
-                </ul></li>
-                
-                <li class="dropdown">
-                <a href="" class="dropdown-toggle" data-toggle="dropdown" ng-show="currentUser.username">
-                <span class="glyphicon glyphicon-globe" ng-click="updateLength()">
-                <span class="rw-number-notification" ng-if="notificationNotViewedLength>0 || notificationNotViewedJobLength>0 ">
-                {{notificationNotViewedLength}}</span></span>
-                </a>
-                <ul class="dropdown-menu">
+                   
+ <div  ng-repeat="chat in chats" class="chat {{chat.direction}}" ng-class="{'broadcast': chat.broadcast}">
+                       <div class="col-md-3 col-xs-3 " id="chats">
+                        <span class="from" style="padding-left:25px;">
+		        	{{chat.from}} <small ng-if="chat.broadcast">BROADCAST</small>
+		        	<img  class="img-circle"  src="http://localhost:9090/collabmiddleware/getimage/{{chat.from}}" >
+					 <!-- alt="" onerror="this.src='images/profilepic2.png'" width="37" height="35" style="color:white;"> -->
+                       </span>
+                        </div>
+                        <div class="col-md-9 col-xs-9" id="chats">
+                            <div>
+                              <p> 
+		       		
+		      
+		        <span class="message">{{chat.message}}</span></p>
+                               <!--  <time datetime="2009-11-13T20:00"></time> -->
+                            </div>
+                        </div>
+                       
+                      
+                    </div>
+                   
+                  
+                </div>
+                <div class="panel-footer">
                
-                <li ng-repeat="notification in notificationNotViewed">
-                <a href="" ng-click="updateNotification(notification.id)" style="color:red">
-                {{notification.blogTitle}} is{{notification.approvalStatus}} {{notification.rejectionReason}}
-                </a></li>
                 
-                 <li ng-repeat="notification in notificationViewed">
-                <a href="" ng-click="" style="color:blue">
-                {{notification.blogTitle}} is{{notification.approvalStatus}} {{notification.rejectionReason}}
-                </a></li>
-             
-              </ul>
-              </li>
-                
-                
-                <li><a href="" ng-show="currentUser.username" ng-click="logout()">logout</a></li>
-                
-<li><a href="#/register" ng-hide="currentUser.username">Sign Up</a></li>
-<li><a href="#/login" ng-hide="currentUser.username">Sign In</a></li>
-
-</ul>
-</div>
-</div></nav>
-</header>
-<div ng-view></div>
+                    <div class="input-group">
+                        <input id="btn-input" type="text"   name="message" ng-model="chat.message" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+                        <span class="input-group-btn">
+                        <input type="submit"  ng-focus="focus-on-click" name="send"  class="btn btn-warning btn-sm" id="btn-chat">Send </span>
+                        
+                    </div>
+                      </form>
+                     </div>
+                 
+               
+    		</div>
+        </div>
+    </div>
+    
+  
+  
+</div> 
+</span>
+	
+	<br><br><br><br>
+	<div class="footer" style="background:linear-gradient(to bottom, #ff6600 0%, #ff0066 94%);font-weight:normal;position:fixed;height:30px; bottom: 0; z-index: 2; overflow-y: hidden;padding: 20px;"> 
+       <p > <span class="pull pull-right">Designed & Developed | Aishwarya Arora </span>
+     <span class="pull pull-left"  >Copyright &copy; 2018,Connect | All Rights Reserved.</span></p>
+    </div>
 </body>
-
+ <script src="js/sockjs/sockjs.js"></script>
+    <script src="js/stomp/dist/stomp.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-animate.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
@@ -97,13 +444,15 @@
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="controllers/usercontroller.js"></script>
 <script type="text/javascript" src="services/userservice.js"></script>
-<script type="text/javascript" src="controllers/blogcontroller.js"></script>
-<script type="text/javascript" src="controllers/blogpostdetailscontroller.js"></script>
-<script type="text/javascript" src="controllers/homecontroller.js"></script>
-<script type="text/javascript" src="services/homeservice.js"></script>
-<script type="text/javascript" src="services/blogservice.js"></script>
 <script type="text/javascript" src="controllers/jobcontroller.js"></script>
 <script type="text/javascript" src="services/jobservice.js"></script>
-
+<script type="text/javascript" src="controllers/blogpostcontroller.js"></script>
+<script type="text/javascript" src="controllers/blogpostdetailscontroller.js"></script>
+<script type="text/javascript" src="services/blogpostservice.js"></script>
+<script type="text/javascript" src="controllers/homecontroller.js"></script>
+<script type="text/javascript" src="services/homeservice.js"></script>
+<script type="text/javascript" src="controllers/friendcontroller.js"></script>
+<script type="text/javascript" src="services/friendservice.js"></script>
+<script type="text/javascript" src="controllers/chatcontroller.js"></script>
+<script type="text/javascript" src="services/chatservice.js"></script>
 </html>
-
