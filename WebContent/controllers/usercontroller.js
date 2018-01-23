@@ -1,64 +1,111 @@
 /**
  * UserController
  */
-app.controller('UserController', function($scope, UserService, $location,
-		$rootScope, $cookieStore) {
+app.controller('UserController',function($scope,UserService,$location,$routeParams,$rootScope,$cookieStore){
 
-	// only for edit,this statement will be executed not for registration
-	if ($rootScope.currentUser != undefined) {
-		UserService.getUser().then(function(response) {
-			$scope.user = response.data // user object
-		}, function(response) {// 401,500
-			if (response.status == 401) {
+	var username=$routeParams.username;
+	
+	if($rootScope.currentUser!=undefined){ //Fetch user details
+		UserService.getUser().then(function(response){
+			$scope.user=response.data   //user object
+			
+		},function(response)//401,500
+		{
+			delete $rootScope.currentUser;
+			$cookieStore.remove('currentUser')
+			if(response.status==401)
+			{
 				$location.path('/login')
-			}
-			//if (response.status == 500) {
-				//$scope.error = response.data // ErrorClazz object
-				//$location.path('/editprofile')
-			//}
-
+			}			
 		})
+		
 	}
-
-	$scope.registerUser = function() {// 2
-		console.log($scope.user)
-		UserService.registerUser($scope.user)// 3
-		.then(function(response) {
+	
+	if($rootScope.currentUser!=undefined){
+	UserService.getUserDetails(username).then(function(response)
+	{
+		$scope.userdetails=response.data
+		
+	},function(response)
+	{
+		if(response.status==401)
+		{
 			$location.path('/login')
-		}, function(response) {
-			console.log(response.data)
-			console.log(response.status)
-			$scope.error = response.data // ErrorClazz object in JSON
-		})// 9
-	}
-
-	$scope.login = function() {
-		UserService.login($scope.user).then(function(response) {// 200,User
-			$rootScope.currentUser = response.data
-			$cookieStore.put('currentUser', response.data)
-			$location.path('/home')
-		}, function(response) {// 401,500....
-			if (response.status == 401) {
-				$scope.error = response.data// errorClazz in JSON fmt
-				$location.path('/login')
-			}
+		}
+	})
+	
+	UserService.getListofMutualFriends(username).then(function(response)
+		{
+			$scope.mutualfriends=response.data
+		},function(response)
+		{
+			if(response.status==401)
+				$location.path('/login')			
 		})
 	}
 	
-	$scope.editUserProfile = function(){
-		UserService.editUserProfile($scope.user).then(function(response) {
-			alert('Updated Successfully!')
-			$location.path('/home')
-		}, function(response) {// 401,500....
-			if (response.status == 401) {
-				$scope.error = response.data// errorClazz in JSON fmt
+	$scope.registerUser=function()//2
+	{
+		console.log($scope.user)
+		UserService.registerUser($scope.user)//3
+		.then(function (response)
+		{
+			$rootScope.message="Registration Successful " + $scope.user.username + "Please login to your account."
+			$location.path('/login')
+			
+			
+			},function(response)
+			{
+				console.log(response.data)
+				console.log(response.status)
+				$scope.error=response.data//Error Class Object in JSON.
+			})//9
+				
+	}
+	
+	$scope.login=function()
+	{
+		UserService.login($scope.user)
+		.then(function(response) //200 user
+		{
+			$rootScope.currentUser=response.data;
+			$cookieStore.put('currentUser',response.data)
+		 $location.path('/home')
+		},function(response){ //401 ,500
+			console.log(response.data);
+			console.log(response.status);
+			if(response.status==401){
+				$scope.error=response.data;//errorclass in json format.
 				$location.path('/login')
 			}
-			if (response.status == 500) {
-			$scope.error = response.data // ErrorClazz object
-			$location.path('/editprofile')
-		}
-		})
+		
+			
+				})		
+	 }
+	
+	$scope.editUserProfile=function()
+	{
+		UserService.editUserProfile($scope.user)
+		.then(function(response)
+		{
+			alert(' User Details Updated Successfully')
+			$location.path('/home')
+			
+		},function(response)
+	     {
+			if(response.status==401)
+			{
+				$location.path('/login')
+			}
+			if(response.status==500)
+			{
+				$scope.error=response.data
+				$location.path('/editprofile')
+			}
+			
+			
+		 })
+		
 	}
 	
 })

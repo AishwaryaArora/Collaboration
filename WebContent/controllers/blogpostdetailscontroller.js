@@ -1,12 +1,12 @@
 /**
  * BlogPostDetailsController
  */
-app.controller('BlogPostDetailsController',function($scope,$routeParams,$location,$rootScope,BlogService)
+app.controller('BlogPostDetailsController',function($scope,$routeParams,$location,$rootScope,BlogPostService)
 {
 	var id=$routeParams.id	
 	$scope.showComment=false;
 
-	BlogService.getBlogPost(id).then(function(response) {
+	BlogPostService.getBlogPost(id).then(function(response) {
 		$scope.blogPost = response.data
 
 	}, function(response) {
@@ -20,7 +20,7 @@ app.controller('BlogPostDetailsController',function($scope,$routeParams,$locatio
 	// 2 variables blogsapproved, BlogsWitingForApproval
 	//Get Approved Blogs
 	// Statement to initialize variable blogsApproved
-	BlogService.getBlogsApproved().then(function(response)
+	BlogPostService.getBlogsApproved().then(function(response)
 	{
 	  $scope.blogsApproved=response.data //select *  from blogpost where approved=1
 		       
@@ -34,7 +34,7 @@ app.controller('BlogPostDetailsController',function($scope,$routeParams,$locatio
 			})
 	
 	//BlogPostLikes -change colour of like button depending on whether user has liked the blog or not.
-	BlogService.userLikes(id).then(function(response){
+	BlogPostService.userLikes(id).then(function(response){
 		if(response.data=='')  //user has not yet liked the post.
 			$scope.liked=false;
 		else
@@ -50,7 +50,7 @@ app.controller('BlogPostDetailsController',function($scope,$routeParams,$locatio
 	})
 	
 	$scope.updateLikes=function(){
-		BlogService.updateLikes($scope.blogPost).then(function(response){
+		BlogPostService.updateLikes($scope.blogPost).then(function(response){
 			$scope.blogPost=response.data;
 			$scope.liked=!$scope.liked; //change like property evrytime user updates ie likes or dislikes.
 			//blogdetails.html
@@ -65,7 +65,7 @@ app.controller('BlogPostDetailsController',function($scope,$routeParams,$locatio
 	}
 	
 	$scope.updateBlogPost=function(){
-		BlogService.updateBlogPost($scope.blogPost,$scope.rejectionReason).then(function(response){
+		BlogPostService.updateBlogPost($scope.blogPost,$scope.rejectionReason).then(function(response){
 			$location.path('/getblogs')
 		},function(response)
 		{
@@ -82,14 +82,14 @@ app.controller('BlogPostDetailsController',function($scope,$routeParams,$locatio
 		})		
 	}
 	
-	/*$scope.addComment=function() // add a new comment
+	$scope.addComment=function() // add a new comment
 	{
 		if($scope.commentTxt==undefined){
 			alert('Please enter comment')
 		}
 		else
 		BlogPostService.addComment($scope.commentTxt,id).then(function(response){
-			alert(response.status)
+			alert("comment posted successfully")
 			$scope.commentTxt=''
 			$scope.blogPost=response.data  //list of blog comments for the blogpost
 		},function(response)
@@ -114,6 +114,6 @@ app.controller('BlogPostDetailsController',function($scope,$routeParams,$locatio
 		$scope.showComment=!$scope.showComment
 	}
 	
-	*/
+	
 	
 	})
