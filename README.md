@@ -3,7 +3,7 @@ Collaboration Project
 
 # Screenshots
 
-![Alt text](/collabfrontend/WebContent/imgages/website5.png?raw=true "Optional Title")
+![Alt text](/WebContent/imgages/website5.png?raw=true "Optional Title")
 
 ![Alt text](/collabfrontend/WebContent/imgages/website12.png?raw=true "Optional Title")
 
